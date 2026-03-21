@@ -1,0 +1,13 @@
+# Marp CLI cache and temp files
+.marp/
+
+# macOS
+.DS_Store
+
+# Local node_modules (if installing marp-cli locally)
+# node_modules/
+
+# Editor temp files
+*.swp
+*.swo
+*~
