@@ -1,0 +1,1184 @@
+<!DOCTYPE html><html lang="C"><head><title>多处理器</title><meta property="og:title" content="多处理器"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><style>@media screen{body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=overview] button.bespoke-marp-overview-close,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area .bespoke-marp-presenter-info-page,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button{appearance:none;background-color:initial;border:0;color:inherit;cursor:pointer;font-size:inherit;opacity:.8;outline:none;padding:0;transition:opacity .2s linear;-webkit-tap-highlight-color:transparent}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=overview] button.bespoke-marp-overview-close:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area .bespoke-marp-presenter-info-page:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:disabled{cursor:not-allowed;opacity:.15!important}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=overview] button.bespoke-marp-overview-close:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area .bespoke-marp-presenter-info-page:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover{opacity:1}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=overview] button.bespoke-marp-overview-close:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area .bespoke-marp-presenter-info-page:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover:active{opacity:.6}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=overview] button.bespoke-marp-overview-close:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area .bespoke-marp-presenter-info-page:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover:not(:disabled){transition:none}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-prev{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNNjggOTAgMjggNTBsNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-next{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJtMzIgOTAgNDAtNDAtNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen]{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgeD0iMTAiIHk9IjIwIiBjbGFzcz0iYSIgcng9IjUuNjciLz48cGF0aCBkPSJNNDAgNzBIMjBWNTBtMjAgMEwyMCA3MG00MC00MGgyMHYyMG0tMjAgMCAyMC0yMCIgY2xhc3M9ImEiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen]{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgeD0iMTAiIHk9IjIwIiBjbGFzcz0iYSIgcng9IjUuNjciLz48cGF0aCBkPSJNMjAgNTBoMjB2MjBtLTIwIDAgMjAtMjBtNDAgMEg2MFYzMG0yMCAwTDYwIDUwIiBjbGFzcz0iYSIvPjwvc3ZnPg==")}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter]{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNODcuOCA0Ny41Qzg5IDUwIDg3LjcgNTIgODUgNTJIMzVhOC43IDguNyAwIDAgMS03LjItNC41bC0xNS42LTMxQzExIDE0IDEyLjIgMTIgMTUgMTJoNTBhOC44IDguOCAwIDAgMSA3LjIgNC41ek02MCA1MnYzNm0tMTAgMGgyME00NSA0MmgyMCIvPjwvc3ZnPg==") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=overview] button.bespoke-marp-overview-close,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button.bespoke-marp-presenter-note-bigger{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNMTIgNTBoODBNNTIgOTBWMTAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button.bespoke-marp-presenter-note-smaller{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNMTIgNTBoODAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=overview],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=overview]{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4O3J4OjVweDtyeTo1cHg7d2lkdGg6MjVweDtoZWlnaHQ6MjVweH08L3N0eWxlPjwvZGVmcz48cmVjdCB4PSIyMCIgeT0iMjAiIGNsYXNzPSJhIi8+PHJlY3QgeD0iNTUiIHk9IjIwIiBjbGFzcz0iYSIvPjxyZWN0IHg9IjIwIiB5PSI1NSIgY2xhc3M9ImEiLz48cmVjdCB4PSI1NSIgeT0iNTUiIGNsYXNzPSJhIi8+PC9zdmc+") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}}@keyframes __bespoke_marp_transition_reduced_outgoing__{0%{opacity:1}to{opacity:0}}@keyframes __bespoke_marp_transition_reduced_incoming__{0%{mix-blend-mode:plus-lighter;opacity:0}to{mix-blend-mode:plus-lighter;opacity:1}}.bespoke-marp-note,.bespoke-marp-osc,.bespoke-progress-parent{display:none;transition:none}@media screen{::view-transition-group(*){animation-duration:var(--marp-bespoke-transition-animation-duration,.5s);animation-timing-function:ease}::view-transition-new(*),::view-transition-old(*){animation-delay:0s;animation-direction:var(--marp-bespoke-transition-animation-direction,normal);animation-duration:var(--marp-bespoke-transition-animation-duration,.5s);animation-fill-mode:both;animation-name:var(--marp-bespoke-transition-animation-name,var(--marp-bespoke-transition-animation-name-fallback,__bespoke_marp_transition_no_animation__));mix-blend-mode:normal}::view-transition-old(*){--marp-bespoke-transition-animation-name-fallback:__bespoke_marp_transition_reduced_outgoing__;animation-timing-function:ease}::view-transition-new(*){--marp-bespoke-transition-animation-name-fallback:__bespoke_marp_transition_reduced_incoming__;animation-timing-function:ease}::view-transition-new(root),::view-transition-old(root){animation-timing-function:linear}::view-transition-new(__bespoke_marp_transition_osc__),::view-transition-old(__bespoke_marp_transition_osc__){animation-duration:0s!important;animation-name:__bespoke_marp_transition_osc__!important}::view-transition-new(__bespoke_marp_transition_osc__){opacity:0!important}.bespoke-marp-transition-warming-up::view-transition-group(*),.bespoke-marp-transition-warming-up::view-transition-new(*),.bespoke-marp-transition-warming-up::view-transition-old(*){animation-play-state:paused!important}body,html{height:100%;margin:0}body{background:#000;overflow:hidden}svg.bespoke-marp-slide{content-visibility:hidden;interactivity:inert;opacity:0;pointer-events:none;z-index:-1}svg.bespoke-marp-slide:not(.bespoke-marp-active) *{view-transition-name:none!important}svg.bespoke-marp-slide.bespoke-marp-active{content-visibility:visible;interactivity:auto;opacity:1;pointer-events:auto;z-index:0}svg.bespoke-marp-slide.bespoke-marp-active.bespoke-marp-active-ready *{animation-name:__bespoke_marp__!important}@supports not (content-visibility:hidden){svg.bespoke-marp-slide[data-bespoke-marp-load=hideable]{display:none}svg.bespoke-marp-slide[data-bespoke-marp-load=hideable].bespoke-marp-active{display:block}}}@media screen and (prefers-reduced-motion:reduce){svg.bespoke-marp-slide *{view-transition-name:none!important}}@media screen{[data-bespoke-marp-fragment=inactive]{visibility:hidden}body[data-bespoke-view=""] .bespoke-marp-parent,body[data-bespoke-view=next] .bespoke-marp-parent{inset:0;position:absolute}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc{background:#000000a6;border-radius:7px;bottom:50px;color:#fff;contain:paint;display:block;font-family:Helvetica,Arial,sans-serif;font-size:16px;left:50%;line-height:0;opacity:1;padding:12px;position:absolute;touch-action:manipulation;transform:translateX(-50%);transition:opacity .2s linear;-webkit-user-select:none;user-select:none;view-transition-name:__bespoke_marp_transition_osc__;white-space:nowrap;will-change:transform;z-index:1}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>:where(*),body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>:where(*){margin-left:6px}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>:where(*):where(:first-child),body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>:where(*):where(:first-child){margin-left:0}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span{opacity:.8}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page]{display:inline-block;min-width:140px;text-align:center}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=overview],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=overview],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev]{height:32px;line-height:32px;width:32px}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive{cursor:none}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc{opacity:0;pointer-events:none}body[data-bespoke-view=""] svg.bespoke-marp-slide,body[data-bespoke-view=next] svg.bespoke-marp-slide{height:100%;left:0;position:absolute;top:0;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent{background:#222;display:flex;height:5px;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent+:where(.bespoke-marp-parent){top:5px}body[data-bespoke-view=""] .bespoke-progress-parent .bespoke-progress-bar{background:#0288d1;flex:0 0 0;transition:flex-basis .2s cubic-bezier(0,1,1,1)}body[data-bespoke-view=next]{background:#0000}body[data-bespoke-view=presenter]{background:#161616}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container{display:grid;font-family:Helvetica,Arial,sans-serif;grid-template:"current dragbar next" minmax(140px,1fr) "current dragbar note" 2fr "info    dragbar note" 3em;grid-template-columns:minmax(3px,var(--bespoke-marp-presenter-split-ratio,66%)) 0 minmax(3px,1fr);height:100%;left:0;position:absolute;top:0;width:100%}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container :where(.bespoke-marp-parent){grid-area:current;overflow:hidden;position:relative}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container :where(.bespoke-marp-parent) :where(svg.bespoke-marp-slide){height:calc(100% - 40px);left:20px;pointer-events:none;position:absolute;top:20px;-webkit-user-select:none;user-select:none;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container :where(.bespoke-marp-parent) :where(svg.bespoke-marp-slide).bespoke-marp-active{filter:drop-shadow(0 3px 10px rgba(0,0,0,.5))}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container{background:#0288d1;cursor:col-resize;grid-area:dragbar;margin-left:-3px;opacity:0;position:relative;transition:opacity .4s linear .1s;width:6px;z-index:10}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container:hover{opacity:1}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container.active{opacity:1;transition-delay:0s}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container{background:#222;cursor:pointer;display:none;grid-area:next;overflow:hidden;position:relative}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container iframe.bespoke-marp-presenter-next{background:#0000;border:0;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.5));height:calc(100% - 40px);left:20px;pointer-events:none;position:absolute;interactivity:inert;top:20px;-webkit-user-select:none;user-select:none;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container{background:#222;color:#eee;grid-area:note;position:relative;z-index:1}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button{height:1.5em;line-height:1.5em;width:1.5em}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-wrapper{display:block;inset:0;position:absolute}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-buttons{background:#000000a6;border-radius:4px;bottom:0;display:flex;gap:4px;margin:12px;opacity:0;padding:6px;pointer-events:none;position:absolute;right:0;transition:opacity .2s linear}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-buttons:focus-within,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-wrapper:focus-within+.bespoke-marp-presenter-note-buttons,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container:hover .bespoke-marp-presenter-note-buttons{opacity:1;pointer-events:auto}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note{box-sizing:border-box;font-size:calc(1.1em*var(--bespoke-marp-note-font-scale, 1));height:calc(100% - 40px);margin:20px;overflow:auto;padding-right:3px;white-space:pre-wrap;width:calc(100% - 40px);word-wrap:break-word;scrollbar-color:#eeeeee80 #0000;scrollbar-width:thin}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar{width:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-track{background:#0000}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-thumb{background:#eeeeee80;border-radius:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note:empty{pointer-events:none}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:first-child{margin-top:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:last-child{margin-bottom:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container{align-items:center;box-sizing:border-box;color:#eee;display:flex;flex-wrap:nowrap;grid-area:info;justify-content:center;overflow:hidden;padding:0 10px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{box-sizing:border-box;display:block;padding:0 10px;white-space:nowrap;width:100%}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button{height:1.5em;line-height:1.5em;width:1.5em}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area{order:2;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page-area .bespoke-marp-presenter-info-page{display:inline-block;min-width:120px;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time{color:#999;order:1;text-align:left}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{color:#999;order:3;text-align:right}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer:hover{cursor:pointer}body[data-bespoke-view=overview]{background:#161616;overflow:auto}body[data-bespoke-view=overview] [data-bespoke-marp-fragment=inactive]{visibility:visible}body[data-bespoke-view=overview] .bespoke-marp-overview-header{backdrop-filter:blur(4px);background:#222222d9;box-shadow:0 3px 10px #00000080;box-sizing:border-box;display:flex;height:48px;inset:0 0 auto;justify-content:flex-end;padding:10px;position:fixed;z-index:1}body[data-bespoke-view=overview] button.bespoke-marp-overview-close{height:28px;line-height:28px;transform:rotate(45deg);width:28px}body[data-bespoke-view=overview] .bespoke-marp-parent{display:grid;gap:40px;grid-template-columns:repeat(auto-fit,minmax(0,240px));justify-content:space-around;padding:30px}body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide{--bov-selected:#0000;--bov-focus:#161616;--bov-focus-outline:#0000;background-image:conic-gradient(#161616 0 0),conic-gradient(var(--bov-focus) 0 0),conic-gradient(var(--bov-focus-outline) 0 0),conic-gradient(var(--bov-selected) 0 0);background-position:5px 5px,3px 3px,2px 2px,0 0;background-repeat:no-repeat;background-size:calc(100% - 10px) calc(100% - 10px),calc(100% - 6px) calc(100% - 6px),calc(100% - 4px) calc(100% - 4px),100% 100%;content-visibility:visible;cursor:pointer;filter:drop-shadow(0 3px 10px rgba(0,0,0,.5));margin:-6px;padding:6px;interactivity:auto;opacity:1;outline:0;pointer-events:auto;scroll-margin-block:30px;width:100%;z-index:0}body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide *,body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide.bespoke-marp-active *{pointer-events:none;interactivity:inert}body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide:active,body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide:focus-visible,body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide:hover{--bov-focus-outline:#161616}body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide:focus-visible,body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide:hover{--bov-focus:#999}body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide:active{--bov-focus:#eee}body[data-bespoke-view=overview] .bespoke-marp-parent svg.bespoke-marp-slide.bespoke-marp-active{--bov-selected:#0288d1}body[data-bespoke-view=overview]:has(.bespoke-marp-overview-header) .bespoke-marp-parent{padding-top:78px}body[data-bespoke-view=overview]:has(.bespoke-marp-overview-header) .bespoke-marp-parent svg.bespoke-marp-slide{scroll-margin-top:78px}.bespoke-marp-overview{background:#000000a6;inset:0;opacity:0;pointer-events:none;position:fixed;transition:opacity .1s ease;z-index:10}.bespoke-marp-overview iframe{background:#222;border:0;display:block;height:100%;left:0;position:absolute;top:0;width:100%}.bespoke-marp-overview[data-open="1"]{opacity:1;pointer-events:auto}}@media print{.bespoke-marp-overview,.bespoke-marp-presenter-info-container,.bespoke-marp-presenter-next-container,.bespoke-marp-presenter-note-container{display:none}}</style><style>@charset "UTF-8";@import "https://fonts.bunny.net/css?family=Lato:400,900|Roboto+Mono:400,700&display=swap";div#\:\$p > svg > foreignObject > section{width:1280px;height:720px;box-sizing:border-box;overflow:hidden;position:relative;scroll-snap-align:center center;-webkit-text-size-adjust:100%;text-size-adjust:100%}div#\:\$p > svg > foreignObject > section::after{bottom:0;content:attr(data-marpit-pagination);padding:inherit;pointer-events:none;position:absolute;right:0}div#\:\$p > svg > foreignObject > section:not([data-marpit-pagination])::after{display:none}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1){font-size:2em;margin-block:0.67em}div#\:\$p > svg > foreignObject > section video::-webkit-media-controls{will-change:transform}@page {size:1280px 720px;margin:0}@media print{html, body{background-color:#fff;margin:0;page-break-inside:avoid;break-inside:avoid-page}div#\:\$p > svg > foreignObject > section{page-break-before:always;break-before:page}div#\:\$p > svg > foreignObject > section, div#\:\$p > svg > foreignObject > section *{-webkit-print-color-adjust:exact!important;animation-delay:0s!important;animation-duration:0s!important;color-adjust:exact!important;print-color-adjust:exact!important;transition:none!important}div#\:\$p > svg[data-marpit-svg]{display:block;height:100vh;width:100vw}}div#\:\$p > svg > foreignObject > :where(section){container-type:size}div#\:\$p > svg > foreignObject > section img[data-marp-twemoji]{background:transparent;height:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;width:1em}/*!
+ * Marp / Marpit Gaia theme.
+ *
+ * @theme gaia
+ * @author Yuki Hattori
+ *
+ * @auto-scaling true
+ * @size 16:9 1280px 720px
+ * @size 4:3 960px 720px
+ */div#\:\$p > svg > foreignObject > section :is(pre, marp-pre) code.hljs{display:block;overflow-x:auto;padding:1em}div#\:\$p > svg > foreignObject > section code.hljs{padding:3px 5px}div#\:\$p > svg > foreignObject > section .hljs{background:#000;color:#f8f8f8}div#\:\$p > svg > foreignObject > section .hljs-comment,div#\:\$p > svg > foreignObject > section .hljs-quote{color:#aeaeae;font-style:italic}div#\:\$p > svg > foreignObject > section .hljs-keyword,div#\:\$p > svg > foreignObject > section .hljs-selector-tag,div#\:\$p > svg > foreignObject > section .hljs-type{color:#e28964}div#\:\$p > svg > foreignObject > section .hljs-string{color:#65b042}div#\:\$p > svg > foreignObject > section .hljs-subst{color:#daefa3}div#\:\$p > svg > foreignObject > section .hljs-link,div#\:\$p > svg > foreignObject > section .hljs-regexp{color:#e9c062}div#\:\$p > svg > foreignObject > section .hljs-name,div#\:\$p > svg > foreignObject > section .hljs-section,div#\:\$p > svg > foreignObject > section .hljs-tag,div#\:\$p > svg > foreignObject > section .hljs-title{color:#89bdff}div#\:\$p > svg > foreignObject > section .hljs-class .hljs-title,div#\:\$p > svg > foreignObject > section .hljs-doctag,div#\:\$p > svg > foreignObject > section .hljs-title.class_{text-decoration:underline}div#\:\$p > svg > foreignObject > section .hljs-bullet,div#\:\$p > svg > foreignObject > section .hljs-number,div#\:\$p > svg > foreignObject > section .hljs-symbol{color:#3387cc}div#\:\$p > svg > foreignObject > section .hljs-params,div#\:\$p > svg > foreignObject > section .hljs-template-variable,div#\:\$p > svg > foreignObject > section .hljs-variable{color:#3e87e3}div#\:\$p > svg > foreignObject > section .hljs-attribute{color:#cda869}div#\:\$p > svg > foreignObject > section .hljs-meta{color:#8996a8}div#\:\$p > svg > foreignObject > section .hljs-formula{background-color:#0e2231;color:#f8f8f8;font-style:italic}div#\:\$p > svg > foreignObject > section .hljs-addition{background-color:#253b22;color:#f8f8f8}div#\:\$p > svg > foreignObject > section .hljs-deletion{background-color:#420e09;color:#f8f8f8}div#\:\$p > svg > foreignObject > section .hljs-selector-class{color:#9b703f}div#\:\$p > svg > foreignObject > section .hljs-selector-id{color:#8b98ab}div#\:\$p > svg > foreignObject > section .hljs-emphasis{font-style:italic}div#\:\$p > svg > foreignObject > section .hljs-strong{font-weight:700}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1),div#\:\$p > svg > foreignObject > section :is(h2, marp-h2),div#\:\$p > svg > foreignObject > section :is(h3, marp-h3),div#\:\$p > svg > foreignObject > section :is(h4, marp-h4),div#\:\$p > svg > foreignObject > section :is(h5, marp-h5),div#\:\$p > svg > foreignObject > section :is(h6, marp-h6){margin:.5em 0 0}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1) strong,div#\:\$p > svg > foreignObject > section :is(h2, marp-h2) strong,div#\:\$p > svg > foreignObject > section :is(h3, marp-h3) strong,div#\:\$p > svg > foreignObject > section :is(h4, marp-h4) strong,div#\:\$p > svg > foreignObject > section :is(h5, marp-h5) strong,div#\:\$p > svg > foreignObject > section :is(h6, marp-h6) strong{font-weight:inherit}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1)::part(auto-scaling),div#\:\$p > svg > foreignObject > section :is(h2, marp-h2)::part(auto-scaling),div#\:\$p > svg > foreignObject > section :is(h3, marp-h3)::part(auto-scaling),div#\:\$p > svg > foreignObject > section :is(h4, marp-h4)::part(auto-scaling),div#\:\$p > svg > foreignObject > section :is(h5, marp-h5)::part(auto-scaling),div#\:\$p > svg > foreignObject > section :is(h6, marp-h6)::part(auto-scaling){max-height:580px}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1){font-size:1.8em}div#\:\$p > svg > foreignObject > section :is(h2, marp-h2){font-size:1.5em}div#\:\$p > svg > foreignObject > section :is(h3, marp-h3){font-size:1.3em}div#\:\$p > svg > foreignObject > section :is(h4, marp-h4){font-size:1.1em}div#\:\$p > svg > foreignObject > section :is(h5, marp-h5){font-size:1em}div#\:\$p > svg > foreignObject > section :is(h6, marp-h6){font-size:.9em}div#\:\$p > svg > foreignObject > section blockquote,div#\:\$p > svg > foreignObject > section p{margin:1em 0 0}div#\:\$p > svg > foreignObject > section ol>li,div#\:\$p > svg > foreignObject > section ul>li{margin:.3em 0 0}div#\:\$p > svg > foreignObject > section ol>li>p,div#\:\$p > svg > foreignObject > section ul>li>p{margin:.6em 0 0}div#\:\$p > svg > foreignObject > section code{display:inline-block;font-family:Roboto Mono,monospace;font-size:.8em;letter-spacing:0;margin:-.1em .15em;padding:.1em .2em;vertical-align:baseline}div#\:\$p > svg > foreignObject > section :is(pre, marp-pre){display:block;margin:1em 0 0;overflow:visible}div#\:\$p > svg > foreignObject > section :is(pre, marp-pre) code{box-sizing:border-box;font-size:.7em;margin:0;min-width:100%;padding:.5em}div#\:\$p > svg > foreignObject > section :is(pre, marp-pre)::part(auto-scaling){max-height:calc(580px - 1em)}div#\:\$p > svg > foreignObject > section blockquote{margin:1em 0 0;padding:0 1em;position:relative}div#\:\$p > svg > foreignObject > section blockquote:after,div#\:\$p > svg > foreignObject > section blockquote:before{content:"“";display:block;font-family:Times New Roman,serif;font-weight:700;position:absolute}div#\:\$p > svg > foreignObject > section blockquote:before{left:0;top:0}div#\:\$p > svg > foreignObject > section blockquote:after{bottom:0;right:0;transform:rotate(180deg)}div#\:\$p > svg > foreignObject > section blockquote>:first-child{margin-top:0}div#\:\$p > svg > foreignObject > section mark{background:transparent}div#\:\$p > svg > foreignObject > section table{border-collapse:collapse;border-spacing:0;margin:1em 0 0}div#\:\$p > svg > foreignObject > section table td,div#\:\$p > svg > foreignObject > section table th{border-style:solid;border-width:1px;padding:.2em .4em}div#\:\$p > svg > foreignObject > section footer,div#\:\$p > svg > foreignObject > section header,div#\:\$p > svg > foreignObject > section:after{box-sizing:border-box;font-size:66%;height:70px;line-height:50px;overflow:hidden;padding:10px 25px;position:absolute}div#\:\$p > svg > foreignObject > section:after{--marpit-root-font-size:66%}div#\:\$p > svg > foreignObject > section header{top:0}div#\:\$p > svg > foreignObject > section footer,div#\:\$p > svg > foreignObject > section header{left:0;right:0}div#\:\$p > svg > foreignObject > section footer{bottom:0}div#\:\$p > svg > foreignObject > section{--color-background:light-dark(#fff8e1, #455a64);--color-background-stripe:light-dark(
+    rgba(69,90,100,.1),
+    rgba(255,248,225,.1)
+  );--color-foreground:light-dark(#455a64, #fff8e1);--color-dimmed:light-dark(
+    #6a7a7d,
+    #dad8c8
+  );--color-highlight:light-dark(#0288d1, #81d4fa);background-color:var(--color-background);background-image:linear-gradient(135deg, hsla(0,0%,53%,0), hsla(0,0%,53%,.02) 50%, hsla(0,0%,100%,0) 0, hsla(0,0%,100%,.05));color:var(--color-foreground);color-scheme:light;font-family:Lato,Avenir Next,Avenir,Trebuchet MS,Segoe UI,sans-serif;font-size:35px;height:720px;letter-spacing:1.25px;line-height:1.35;overflow-wrap:break-word;padding:70px;width:1280px}div#\:\$p > svg > foreignObject > section{--marpit-root-font-size:35px}div#\:\$p > svg > foreignObject > section:after{bottom:0;font-size:80%;right:0}div#\:\$p > svg > foreignObject > section:after{--marpit-root-font-size:80%}div#\:\$p > svg > foreignObject > section a,div#\:\$p > svg > foreignObject > section mark{color:var(--color-highlight)}div#\:\$p > svg > foreignObject > section code{background:var(--color-dimmed);color:var(--color-background)}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1) strong,div#\:\$p > svg > foreignObject > section :is(h2, marp-h2) strong,div#\:\$p > svg > foreignObject > section :is(h3, marp-h3) strong,div#\:\$p > svg > foreignObject > section :is(h4, marp-h4) strong,div#\:\$p > svg > foreignObject > section :is(h5, marp-h5) strong,div#\:\$p > svg > foreignObject > section :is(h6, marp-h6) strong{color:var(--color-highlight)}div#\:\$p > svg > foreignObject > section :is(pre, marp-pre){background:var(--color-foreground)}div#\:\$p > svg > foreignObject > section :is(pre, marp-pre)>code{background:transparent}div#\:\$p > svg > foreignObject > section blockquote:after,div#\:\$p > svg > foreignObject > section blockquote:before,div#\:\$p > svg > foreignObject > section footer,div#\:\$p > svg > foreignObject > section header,div#\:\$p > svg > foreignObject > section section:after{color:var(--color-dimmed)}div#\:\$p > svg > foreignObject > section table td,div#\:\$p > svg > foreignObject > section table th{border-color:var(--color-foreground)}div#\:\$p > svg > foreignObject > section table thead th{background:var(--color-foreground);color:var(--color-background)}div#\:\$p > svg > foreignObject > section table tbody>tr:nth-child(odd) td,div#\:\$p > svg > foreignObject > section table tbody>tr:nth-child(odd) th{background:var(--color-background-stripe, transparent)}div#\:\$p > svg > foreignObject > section>:first-child,div#\:\$p > svg > foreignObject > section>header:first-child+*{margin-top:0}div#\:\$p > svg > foreignObject > section:where(.invert){color-scheme:dark}div#\:\$p > svg > foreignObject > section:where(.gaia){--color-background:#0288d1;--color-background-stripe:rgba(255,248,225,.1);--color-foreground:#fff8e1;--color-dimmed:#cce2de;--color-highlight:#81d4fa;}div#\:\$p > svg > foreignObject > section:where(.lead){align-items:stretch;flex-flow:column nowrap;place-content:safe center center}div#\:\$p > svg > foreignObject > section:where(.lead) :is(h1, marp-h1),div#\:\$p > svg > foreignObject > section:where(.lead) :is(h2, marp-h2),div#\:\$p > svg > foreignObject > section:where(.lead) :is(h3, marp-h3),div#\:\$p > svg > foreignObject > section:where(.lead) :is(h4, marp-h4),div#\:\$p > svg > foreignObject > section:where(.lead) :is(h5, marp-h5),div#\:\$p > svg > foreignObject > section:where(.lead) :is(h6, marp-h6){text-align:center}div#\:\$p > svg > foreignObject > section:where(.lead) p{text-align:center}div#\:\$p > svg > foreignObject > section:where(.lead) blockquote>:is(h1, marp-h1),div#\:\$p > svg > foreignObject > section:where(.lead) blockquote>:is(h2, marp-h2),div#\:\$p > svg > foreignObject > section:where(.lead) blockquote>:is(h3, marp-h3),div#\:\$p > svg > foreignObject > section:where(.lead) blockquote>:is(h4, marp-h4),div#\:\$p > svg > foreignObject > section:where(.lead) blockquote>:is(h5, marp-h5),div#\:\$p > svg > foreignObject > section:where(.lead) blockquote>:is(h6, marp-h6),div#\:\$p > svg > foreignObject > section:where(.lead) blockquote>p{text-align:left}div#\:\$p > svg > foreignObject > section:where(.lead) ol>li>p,div#\:\$p > svg > foreignObject > section:where(.lead) ul>li>p{text-align:left}div#\:\$p > svg > foreignObject > section:where(.lead) table{margin-left:auto;margin-right:auto}div#\:\$p > svg > foreignObject > section{width:1280px;height:720px}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"]{columns:initial!important;display:block!important;padding:0!important}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"]::before, div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"]::after, div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="content"]::before, div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="content"]::after{display:none!important}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container]{all:initial;display:flex;flex-direction:row;height:100%;overflow:hidden;width:100%}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container][data-marpit-advanced-background-direction="vertical"]{flex-direction:column}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"][data-marpit-advanced-background-split] > div[data-marpit-advanced-background-container]{width:var(--marpit-advanced-background-split, 50%)}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"][data-marpit-advanced-background-split="right"] > div[data-marpit-advanced-background-container]{margin-left:calc(100% - var(--marpit-advanced-background-split, 50%))}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container] > figure{all:initial;background-position:center;background-repeat:no-repeat;background-size:cover;flex:auto;margin:0}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container] > figure > figcaption{position:absolute;border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;white-space:nowrap;width:1px}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="content"], div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="pseudo"]{background:transparent!important}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background="pseudo"], div#\:\$p > svg[data-marpit-svg] > foreignObject[data-marpit-advanced-background="pseudo"]{pointer-events:none!important}div#\:\$p > svg > foreignObject > section[data-marpit-advanced-background-split]{width:100%;height:100%}
+</style></head><body><div class="bespoke-marp-osc"><button data-bespoke-marp-osc="prev" tabindex="-1" title="Previous slide">Previous slide</button><span data-bespoke-marp-osc="page"></span><button data-bespoke-marp-osc="next" tabindex="-1" title="Next slide">Next slide</button><button data-bespoke-marp-osc="fullscreen" tabindex="-1" title="Toggle fullscreen (f)">Toggle fullscreen</button><button data-bespoke-marp-osc="overview" tabindex="-1" title="Toggle overview view (o)">Toggle overview view</button><button data-bespoke-marp-osc="presenter" tabindex="-1" title="Open presenter view (p)">Open presenter view</button></div><div id=":$p"><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-class="lead" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="1" style="--paginate:true;--class:lead;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p001.png&quot;);background-size:contain;filter:opacity(0.15);"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="1" data-paginate="true" data-class="lead" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="1" style="--paginate:true;--class:lead;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content">
+<h1 id="%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8">多处理器</h1>
+<p><strong>计算机系统结构</strong><br />
+</p>
+</section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-class="lead" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="1" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="2" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="2" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<h2 id="%E6%9C%AC%E7%AB%A0%E5%86%85%E5%AE%B9">本章内容</h2>
+<ul>
+<li><strong>掌握多处理器概念和基本结构</strong></li>
+<li><strong>掌握多处理器中的互连网络架构及性能分析</strong></li>
+<li><strong>掌握缓存一致性概念及监听一致性协议原理</strong></li>
+<li><strong>掌握同步概念及其实现方式</strong></li>
+<li><strong>理解存储顺序一致性概念</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="3" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="3" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>单处理器性能提升速率减缓，近年年增长率仅为2.9%，单处理器性能有限</strong></li>
+<li><strong>通过增加处理器个数或者处理器核数增加整体计算能力</strong></li>
+<li><strong>2003年之后，从低端到高端的各类处理器普遍采用多核、多处理器体系结构</strong></li>
+<li><strong>多处理器属于MIMD模型，其每个核/处理器是通用的，可以独立执行程序，提供线程级并行（Thread-Level Parallelism，TLP）</strong></li>
+<li><strong>共享网络和全局多级存储（缓存、内存和外存）连接在一起</strong></li>
+<li><strong>多处理器通过两种不同的软件模型来开发TLP：</strong>
+<ul>
+<li>任务级并行处理（Job-Level Parallelism，JLP）：运行一组紧密耦合的线程，协同完成同一项任务</li>
+<li>请求级并行(Request-Level Parallelism，RLP)：执行可能由一或多位用户发起的多个相对独立的进程</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p003.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="4" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="4" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>多处理器体系结构可以从其存储器物理组织结构进行分类：</strong>
+<ul>
+<li>集中式共享存储器结构（也称为对称（共 享存储器）多处理器，symmetric shared-memory multiprocessors，SMP）</li>
+<li>分布式存储器结构（Distributed Shared Memory，DSM）：通过高速互连网络连接多个处理器结点</li>
+</ul>
+</li>
+<li><strong>分布式共享存储结构中每个处理器结点包含：独立的处理器、存储器、I/O和网络接口，处理器能够共享分散式存储器</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p004.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="5" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>从存储地址逻辑空间组织结构方面进行分类。这是程序员能够看到的存储地址空间，总体分为两类：全局共享地址空间和独立分布式地址空间</strong></li>
+<li><strong>全局共享地址空间优势：</strong>
+<ol>
+<li>能够与常用的对称式多处理机很好的配合</li>
+<li>易于编程，采用单一存储空间模型开发应用程序</li>
+<li>简化编译器设计</li>
+<li>当通信数据量较小时，通信开销较低，带宽利用较好</li>
+<li>可以采用Cache机制来减少远程通信的频度，减少了通信延迟以及对共享数据的访问冲突</li>
+</ol>
+</li>
+<li><strong>独立分布式内存地址空间结构是指整个系统的存储地址空间是由多个独立内存编址空间构成</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p005.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="6" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>处理器通信机制分为两类：共享存储器通信机制和消息传递通信机制</strong></li>
+<li><strong>共享存储通信机制：基于全局共享地址空间，各个处理器用load和store指令对全局共享的存储地址进行存储-载入操作</strong></li>
+<li><strong>消息传递通信机制：基于独立地址空间，处理器访问各个独立存储空间时，需要显式地传递消息</strong></li>
+<li><strong>分为同步消息传递和异步消息传递：</strong>
+<ul>
+<li>同步消息传递：请求处理器发送消息后一直要等到应答完成才继续运行</li>
+<li>异步消息传递：请求处理器发送消息后可以处理其他事情</li>
+</ul>
+</li>
+<li><strong>消息传递通信机制优点：硬件简单、通信显式容易分析、编程者可以参与开发并行程序、同步操作与发送消息关联减少同步错误</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p006.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="7" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>早期，多个处理器和存储器通过共享总线互连，是典型的SMP结构</strong></li>
+<li><strong>近年，多核处理器迅速发展，多个核心也通过共享总线互连</strong></li>
+<li><strong>目前大多数多核多路高性能服务器中，往往采用NUMA结构，前端总线（QPI）实现CPU之间的互连</strong></li>
+<li><strong>CPU通过内存总线和内存直接相连</strong></li>
+<li><strong>CPU通过I/O总线连接高速设备，这些总线控制器都集成到处理器中</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="8" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="8" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>并行较难实现</strong>
+<ul>
+<li>程序内部并行度可能有限</li>
+<li>处理器之间通信的成本较高</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="9" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>并行度不足、远程通信开销大是多处理器性能提升的难点</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="10" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="10" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>互联网络是计算机部件、计算机节点或计算机系统之间的链接</strong></li>
+<li><strong>可能连接：CPU处理器内的多个核、多个CPU处理器、CPU处理器和存储器、一个CPU内存和其他CPU内存、多个计算机、甚至多个计算机网</strong></li>
+<li><strong>是SIMD计算机和MIMD计算机的关键组成部分</strong></li>
+<li><strong>理解互联网络能够更好的设计和评价计算机系统</strong></li>
+<li><strong>互连网络的主要设计目标是：在成本、能耗等约束下，在尽可能短的时间内传输更可能多的数据，避免成为系统的瓶颈</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="11" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>互连网络分为四种类型：</strong>
+<ul>
+<li><strong>片上网络（On-chip networks，OCNs）</strong>：主要用于芯片内微架构内功能单元的互连，包括片内寄存器文件、缓存、计算模块以及功能IP模块</li>
+<li><strong>系统/存储区域网络（System/storage area networks，SANs）</strong>：用于多处理器之间、处理器-内存互连，也用于连接服务器和数据中心环境中的存储和I/O组件</li>
+<li><strong>局域网（Local area networks，LANs）</strong>：用于在机房、整个建筑物或校园环境中互连计算机，可以将PC互连成集群</li>
+<li><strong>广域网（Wide area networks，WANs）</strong>：连接分布在全球的计算机系统</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p012.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="12" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>互连网络的性能指标：评估互连网络性能的两个基本指标是时延和带宽</strong></li>
+<li><strong>通信时延：指从源结点到目的结点传送一条消息所需的总时间</strong>
+<ul>
+<li>通信延迟 = 软件开销 + 通道时延 + 选路时延 + 竞争时延</li>
+</ul>
+</li>
+<li><strong>网络时延：通道时延与选路时延的和，由网络硬件特征决定，与程序行为和网络传输状态无关</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="13" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>通信延迟模型：</strong>
+<ul>
+<li>发送开销 + 飞行时间 + 网络传输时间 + 接收开销</li>
+<li>网络传输时间 = 数据包大小 / 带宽</li>
+<li>飞行时间由光速和距离决定</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="14" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p015.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="14" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="14" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="14" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="15" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>网络拓扑结构可以使用图表示，通过有向边或无向边描述节点间的连接关系</strong></li>
+<li><strong>网络拓扑结构的几个关键参数：</strong>
+<ul>
+<li><strong>网络规模</strong>：网络中结点的个数，表示该网络所能链接的部件的数量</li>
+<li><strong>结点度</strong>：与结点相连接的边数，可以进一步分为入度和出度</li>
+<li><strong>结点距离</strong>：网络中任意两个结点间通路所经历边数的最小值</li>
+<li><strong>网络直径D</strong>：网络中任意两结点间距离的最大值，网络直径应当尽可能地小</li>
+<li><strong>等分宽度b</strong>：当把一个N结点网络切分为结点数相同的两部分时，沿切口边数的最小值
+<ul>
+<li>线等分宽度：B = b × w，w为通道宽度（用位表示）</li>
+</ul>
+</li>
+<li><strong>对称性</strong>：如果从任何结点看，网络拓扑结构都相同的，就称为对称网络</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="16" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>互联网络可以看成是输入节点到输出节点之间的一组互连映射关系，可以用互联函数进行形式化表示</strong></li>
+<li><strong>在互联函数f的作用下，输入端x连接到输出端f(x)</strong></li>
+<li><strong>互连函数反映了网络输入数组和输出数组之间对应的置换关系或排列关系（置换函数或排列函数）</strong></li>
+<li><strong>互连函数有多种表示方式，一个网络通过开关切换可以形成多个映射关系，所以要用&quot;互连函数族&quot;来定义一个网络</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="17" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>互联函数f(x)采用循环表示</strong></li>
+<li><strong>j称为该循环的长度，即：（x₀ x₁ x₂ ... xⱼ₋₁）</strong></li>
+<li><strong>表示：f(x₀)=x₁, f(x₁)=x₂, ..., f(xⱼ₋₁)=x₀</strong></li>
+<li><strong>设n=log₂N，则可以用n位二进制来表示N个输入端和输出端的二进制地址</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="18" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>恒等函数I：实现同号输入端和输出端之间的连接</strong></li>
+<li><strong>交换函数E：实现二进制地址编码中第k位互反的输入端和输出端之间的连接</strong></li>
+<li><strong>网络结点个数为N时，共有N种互连函数，通常用Cubeₖ来表示对结点二进制地址第k位形成的连接关系</strong></li>
+<li><strong>当k=N=8, n=3时，称之为立方体函数</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="19" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p022.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="19" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="19" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="19" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="20" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>均匀洗牌函数σ(x)：将输入端分成数目相等的两半，按类似均匀混洗扑克牌的方式，交叉地连接到输出端，也称为混洗函数</strong></li>
+<li><strong>σ函数就是把输入端的二进制编号循环左移一位</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="21" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>子函数和超函数：</strong>
+<ul>
+<li>互连函数的第k个子函数：把该函数作用于输入端的二进制编号的低k位</li>
+<li>互连函数的第k个超函数：把该函数作用于输入端的二进制编号的高k位</li>
+</ul>
+</li>
+<li><strong>对于均匀洗牌函数：</strong>
+<ul>
+<li>第k个子函数：即把输入端的二进制编号中的低k位循环左移一位</li>
+<li>第k个超函数：即把输入端的二进制编号中的高k位循环左移一位</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="22" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>逆函数：对于任意一种函数f(x)，如果存在g(x)，使得f(x)×g(x)=I(x)，则称g(x)是f(x)的逆函数，记为f⁻¹(x)</strong></li>
+<li><strong>逆均匀洗牌函数f⁻¹(x)：将输入端的二进制编号循环右移一位而得到所连接的输出端编号</strong></li>
+<li><strong>互联函数：σ⁻¹(x) = σ(xₙ₋₁ x₀ x₁ ... xₙ₋₂)</strong></li>
+<li><strong>逆均匀洗牌是均匀洗牌的逆函数</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="23" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p026.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="23" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="23" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="23" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="24" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p027.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="24" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="24" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="25" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>蝶式函数（β）：把输入端的二进制编号的最高位与最低位互换位置，便得到了输出端的编号</strong></li>
+<li><strong>第k个子函数和第k个超函数</strong></li>
+<li><strong>蝶式变换与交换变换的多级组合是构成多级立方体网络的基础</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="26" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>反位序函数：将输入端二进制编号的位序颠倒过来求得相应输出端的编号</strong></li>
+<li><strong>反位序函数：β(xₙ₋₁ ... x₁ x₀) = (x₀ x₁ ... xₙ₋₁)</strong></li>
+<li><strong>第k个子函数和第k个超函数</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="27" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p030.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="27" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="27" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="27" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="28" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>移数函数：将各输入端都错开一定的位置（模N）后连到输出端</strong></li>
+<li><strong>移数函数：PM2₊ᵢ(x) = (x + 2ⁱ) mod N</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="29" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>PM2ᵢ函数（加减2ⁱ函数）：</strong>
+<ul>
+<li>P和M分别表示加和减，2ⁱ表示2的i次方</li>
+<li>PM2ᵢ函数：一种移数函数，将各输入端都错开一定的位置（模N）后连到输出端</li>
+<li>PM2ᵢ互连网络共有2n个互连函数</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="30" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p033.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="30" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="30" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="30" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="31" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>例题：现有16个处理器（编号0, 1, ..., 15），用一个N=16的互连网络互连</strong></li>
+<li><strong>处理器i的输出通道连接互连网络的输入端i，处理器i的输入通道连接互连网络的输出端i</strong></li>
+<li><strong>当该互连网络实现的互连函数分别为Cube₃, PM2₊₃, PM2⁻₀, σ, σ²时，分别给出与第13号处理器所连接的处理器号</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="32" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>互连网络通常可以分为两大类：</strong>
+<ul>
+<li><strong>静态互连网络</strong>：各结点之间有固定的连接通路、且在运行中不能改变的网络</li>
+<li><strong>动态互连网络</strong>：由交换开关构成、可按运行程序的要求动态地改变连接状态的网络</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="33" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>1.线性阵列是一维线性网络，N个结点用N-1个两两连接的链路连成一串</strong>
+<ul>
+<li>端结点的度为1，其余结点的度为2</li>
+<li>网络直径为N-1</li>
+<li>等分宽度b=1</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="34" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="34" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>2.环形结构：线性阵列首尾相连，有单向环、双向环，是一种对称互连结构</strong>
+<ul>
+<li>结点的度都是2，等分宽度b=2</li>
+<li>双向环：网络直径为N/2</li>
+<li>单向环：网络直径为N-1</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="35" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="35" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>带弦环：增加的链路愈多，结点度愈高，网络直径就愈小</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="36" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p041.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="36" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="36" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="36" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="37" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="37" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>3.循环移数网络：通过在环上每个结点到所有与其距离为2的整数幂的结点之间都增加一条附加链而构成</strong></li>
+<li><strong>一般地，如果｜j-i｜=2ʳ（r=0,1,2,...,n-1，n=log₂N），则结点i与结点j连接</strong>
+<ul>
+<li>结点度：2n-1</li>
+<li>直径：n/2</li>
+<li>网络规模N=2ⁿ</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="38" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="38" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>4.树形结构：对于有N=2ᵏ-1个结点、k层的完全平衡的二叉树</strong>
+<ul>
+<li>最大结点度为3，直径为2(k-1)，等分宽度b=1</li>
+</ul>
+</li>
+<li><strong>星形结构：结点度较高，为N-1。直径较小，为常数2，等分宽度b=N/2向下取整</strong></li>
+<li><strong>5.胖树结构：整体结构和二叉树结构类似，但是越往上层，相应的链路带宽也越高</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="39" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="39" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>6.网格形网络和环网形：对于规模为N=n×n的2维网格形网络</strong>
+<ul>
+<li>内部结点的度是4</li>
+<li>边结点的度是3</li>
+<li>角结点的度是2</li>
+<li>网络直径D=2(n-1)</li>
+<li>等分宽度为n</li>
+</ul>
+</li>
+<li><strong>一个由N=nᵏ个结点构成的k维网格形网络（每维n个结点）的内部结点度d=2k，网络直径D=k(n-1)</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="40" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="40" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>Illiac网络：名称来源于采用了这种网络的Illiac IV计算机</strong></li>
+<li><strong>与2维网格形网络结构相比，它把每一列的两个端结点分别连接起来，再把所有行的依次首尾相连为一长串</strong></li>
+<li><strong>对于规模为n×n的Illiac网络：</strong>
+<ul>
+<li>所有结点的度都为4</li>
+<li>网络直径n-1，只有纯网格形网络直径的一半</li>
+<li>等分宽度：2n</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="41" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="41" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>环网：把Illiac网络结构每一列的两个端结点连接起来</strong></li>
+<li><strong>不同处是，它把每一行的两个端结点分别连接起来，而不是把所有行串在一起</strong></li>
+<li><strong>是环形和网格形组合</strong></li>
+<li><strong>对于n×n的环网形网：</strong>
+<ul>
+<li>结点度4</li>
+<li>网络直径2×⌊n/2⌋</li>
+<li>等分宽度b=2n</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="42" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="42" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>7.超立方体：一种二元n立方体结构</strong></li>
+<li><strong>一般来说，一个二元n立方体由N=2ⁿ个结点组成，它们分布在n维上，每维有两个结点</strong></li>
+<li><strong>为实现一个n立方体，只要把两个(n-1)立方体中相对应的结点用链路连接起来即可，共需要2ⁿ⁻¹条链路</strong></li>
+<li><strong>n立方体中结点的度都是n，直径也是n，等分宽度为b=N/2</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="43" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="43" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>8.带环立方体（简称3-CCC）：把3-立方体的每个结点换成一个由3个结点构成的环而形成的</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="44" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="44" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>8.带环k-立方体（简称k-CCC）：k-立方体的变形，通过用k个结点构成的环取代k-立方体中的每个结点而形成</strong>
+<ul>
+<li>网络规模为N=k×2ᵏ</li>
+<li>网络直径为D=2k-1+⌊k/2⌋</li>
+<li>比k-立方体的直径大一倍</li>
+<li>等分宽度为b=N/(2k)</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="45" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="45" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>9.k元n-立方体：环形、网格、环网形、二元n-立方体（超立方体）和Omega网络都是k元n-立方体网络系列的拓扑同构体</strong></li>
+<li><strong>在k元n-立方体网络中，参数n是立方体的维数，k是基数，即每一维上的结点个数</strong></li>
+<li><strong>N=kⁿ，（k=ⁿ√N，n=logₖN）</strong></li>
+<li><strong>k元n-立方体的结点可以用基数为k的n位地址A=(a₁ a₂ ... aₙ)来表示，其中aᵢ表示该结点在第i维上的位置</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="46" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p053.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="46" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="46" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="46" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="47" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="47" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>确定性寻径和自适应寻径：</strong>
+<ul>
+<li><strong>确定性寻径</strong>：通信路径完全由源结点地址和目的地址来决定，与网络的状况无关
+<ul>
+<li>二维网格网络的X-Y寻径</li>
+<li>n维超方体的E-cube寻径</li>
+</ul>
+</li>
+<li><strong>自适应寻径</strong>：通信的通路每一次都要根据资源或者网络的情况来选择
+<ul>
+<li>具有拥塞控制，可以避开拥挤的或者有故障的结点</li>
+<li>例如：TCP/IP网络</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="48" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="48" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>二维网格网络的X-Y寻径：先沿X维方向进行寻径，然后再沿Y维方向寻找路径</strong></li>
+<li><strong>任意一个源结点：s=(x₁,y₁)，任意一个目的结点：d=(x₂,y₂)</strong></li>
+<li><strong>从s出发，先沿X轴方向前进，直到找到d所在的列x₂；然后再沿Y轴方向前进，直到找到目标结点(x₂,y₂)</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="49" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="49" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>对于二维网格，确定以下4组&quot;源结点-目的结点&quot;所需要的路径：</strong>
+<ul>
+<li>(2,1)到(7,6)：需要一条东-北路径</li>
+<li>(0,7)到(4,5)：需要一条东-南路径</li>
+<li>(6,4)到(2,0)：需要一条西-南路径</li>
+<li>(5,3)到(1,5)：需要一条西-北路径</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="50" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="50" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>考虑一个由N＝2ⁿ个结点构成的n方体，每个结点的编号是形为b＝bₙ₋₁...b₁b₀的二进制编码</strong></li>
+<li><strong>设：源结点s＝sₙ₋₁...s₁s₀，目的结点d＝dₙ₋₁...d₁d₀</strong></li>
+<li><strong>现在要确定一条从s到d的步数最少的路径</strong></li>
+<li><strong>算法：</strong>
+<ol>
+<li>计算方向位rᵢ = sᵢ ⊕ dᵢ（i=1,2,...,n）</li>
+<li>令v=s, i=1</li>
+<li>如果rᵢ=1，则从当前结点v寻径到下一结点v⊕2ⁱ⁻¹；否则跳过</li>
+<li>i←i+1，如果i≤n，则转第3步，否则退出</li>
+</ol>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="51" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="51" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>动态网络：动态互连网络能够在运行时改变网络拓扑，主要分为3种形式：总线网络、交叉开关网络和多级互连网络</strong></li>
+<li><strong>总线网络：</strong>
+<ul>
+<li>由一组导线和插座构成，经常被用来实现计算机系统中处理机模块、存储模块和外围设备等之间的互连</li>
+<li>每一次总线只能用于一个源（主部件）到一个或多个目的（从部件）之间的数据传送</li>
+<li>特点：结构简单、实现成本低、带宽较窄</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="52" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p065.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="52" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="52" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="52" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="53" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="53" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>解决总线带宽较窄问题：采用多总线或多层次的总线</strong>
+<ul>
+<li><strong>多总线</strong>：设置多条总线
+<ul>
+<li>为不同的功能设置专门的总线</li>
+<li>重复设置相同功能的总线</li>
+</ul>
+</li>
+<li><strong>多层次的总线</strong>：按层次的架构设置速度不同的总线，使得不同速度的模块有比较适合的总线连接</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="54" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p067.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="54" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="54" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="54" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="55" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="55" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>交叉开关网络：单级开关网络</strong></li>
+<li><strong>交叉点开关能在对偶（源、目的）之间形成动态连接，同时实现多个对偶之间的无阻塞连接</strong></li>
+<li><strong>带宽和互连特性最好</strong></li>
+<li><strong>一个n×n的交叉开关网络，可以无阻塞地实现n!种置换</strong></li>
+<li><strong>当n很大时，交叉开关网络所需要的硬件数量非常巨大</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="56" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="56" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>C.mmp多处理机的互连结构：16台处理机与16个存储模块互连</strong></li>
+<li><strong>最多可同时实现16台处理机对16个不同存储模块的并行访问</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="57" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="57" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>Fujitsu VPP500向量并行处理机的开关网络（224×224）：发PE₀₀₁~PE₂₂₂发送，CP₀₀₁~CP₀₀₂接通/断开接收</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="58" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="58" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>多级互连网络的构成：</strong>
+<ul>
+<li>MIMD和SIMD计算机都采用多级互连网络MIN（Multistage Interconnection Network）</li>
+<li>使用多级开关，使得数据在一次通过网络的过程中可以实现的MIN置换种类更多</li>
+<li>由a×b开关模块和级间连接构成</li>
+<li>每一级都用了多个a×b开关（a个输入和b个输出，通常a=b=2ᵏ，k≥1）</li>
+<li>相邻各级开关之间都有固定的级间连接</li>
+</ul>
+</li>
+<li><strong>通常在N个结点的网络中，多级ICN由n级构成（n=log₂N）</strong></li>
+<li><strong>经典的多级互连网有多级立方体网、多级混洗交换网和多级PM2ᵢ网</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="59" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="59" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>最简单的开关模块：2×2开关</strong></li>
+<li><strong>二元交换开关的四种基本接通状态：&quot;直连&quot;、&quot;交换&quot;、&quot;上播&quot;和&quot;下播&quot;</strong></li>
+<li><strong>在进行数据置换时只能使用前2种</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="60" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="60" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>各种多级互连网络的区别在于所用开关模块、控制方式和级间互连模式的不同</strong></li>
+<li><strong>控制方式：</strong>
+<ul>
+<li><strong>级控制</strong>：每一级所有开关只用一个控制信号控制，只能同时处于同一种状态</li>
+<li><strong>单元控制</strong>：每一个开关都有一个独立的控制信号，可各自处于不同的状态</li>
+<li><strong>部分级控制</strong>：第i级的所有开关分别用i+1个信号控制（0≤i≤n-1）</li>
+</ul>
+</li>
+<li><strong>常用的级间互连模式：均匀洗牌、蝶式、多路洗牌、纵横交叉、立方体连接等</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="61" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="61" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>多级立方体网络包括STARAN网络和间接二进制n方体网络等</strong></li>
+<li><strong>两者仅在控制方式上不同，都采用二功能（直送和交换）的2×2开关</strong></li>
+<li><strong>当第i级（0≤i≤n-1）交换开关处于交换状态时，实现的是Cubeᵢ互连函数</strong></li>
+<li><strong>一个N输入的多级立方体网络有log₂N级，每级用N/2个2×2开关模块，共需要Nlog₂N/2个开关</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="62" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="62" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>间接二进制n方体网络采用单元控制，具有更大灵活性</strong></li>
+<li><strong>STARAN网络采用级控制和部分级控制：</strong>
+<ul>
+<li>采用级控制时，实现交换功能</li>
+<li>采用部分级控制时，实现移数功能</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="63" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="63" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>交换：将有序的一组元素头尾对称地进行交换</strong></li>
+<li><strong>对于由8个元素构成的组，各种基本交换的图形：</strong>
+<ul>
+<li>(a) 4组2元交换</li>
+<li>(b) 2组4元交换</li>
+<li>(c) 1组8元交换</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="64" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="64" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>3级STARAN网络在各种级控制信号的情况下所实现的入出端连接以及所实现的交换函数和功能</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>级控制信号 k₂k₁k₀</th>
+<th>连接的输出端号序列</th>
+<th>实现的分组交换</th>
+<th>实现的互连函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>0 1 2 3 4 5 6 7</td>
+<td>恒等</td>
+<td>I</td>
+</tr>
+<tr>
+<td>001</td>
+<td>1 0 3 2 5 4 7 6</td>
+<td>4组2元交换</td>
+<td>Cube₀</td>
+</tr>
+<tr>
+<td>010</td>
+<td>2 3 0 1 6 7 4 5</td>
+<td>2组4元交换</td>
+<td>Cube₁</td>
+</tr>
+<tr>
+<td>011</td>
+<td>3 2 1 0 7 6 5 4</td>
+<td>2组4元交换+4组2元交换</td>
+<td>Cube₀+Cube₁</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4 5 6 7 0 1 2 3</td>
+<td>1组8元交换</td>
+<td>Cube₂</td>
+</tr>
+<tr>
+<td>101</td>
+<td>5 4 7 6 1 0 3 2</td>
+<td>4组2元交换+1组8元交换</td>
+<td>Cube₀+Cube₂</td>
+</tr>
+<tr>
+<td>110</td>
+<td>6 7 4 5 2 3 0 1</td>
+<td>2组4元交换+1组8元交换</td>
+<td>Cube₁+Cube₂</td>
+</tr>
+<tr>
+<td>111</td>
+<td>7 6 5 4 3 2 1 0</td>
+<td>1组8元交换</td>
+<td>Cube₀+Cube₁+Cube₂</td>
+</tr>
+</tbody>
+</table>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="65" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="65" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>STARAN网络用作移数网络时，采用部分级控制</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>部分级控制信号</th>
+<th></th>
+<th></th>
+<th>连接的输出端号序列</th>
+<th>所实现的移数功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A B C D</td>
+<td>E G</td>
+<td>F H</td>
+<td>I J</td>
+<td>K L</td>
+</tr>
+<tr>
+<td>1 0 0 1</td>
+<td>0 1</td>
+<td>0 0</td>
+<td>1 1 1 0 0 0 0</td>
+<td>移1 mod 8</td>
+</tr>
+<tr>
+<td>1 0 0 1</td>
+<td>0 1</td>
+<td>1 0</td>
+<td>2 3 4 5 6 7 0 1</td>
+<td>移2 mod 8</td>
+</tr>
+<tr>
+<td>1 0 0 1</td>
+<td>1 1</td>
+<td>0 0</td>
+<td>4 5 6 7 0 1 2 3</td>
+<td>移4 mod 8</td>
+</tr>
+<tr>
+<td>0 1 0 1</td>
+<td>1 1</td>
+<td>0 0</td>
+<td>1 2 3 0 5 6 7 4</td>
+<td>移1 mod 4</td>
+</tr>
+<tr>
+<td>0 1 0 1</td>
+<td>0 0</td>
+<td>1 0</td>
+<td>2 3 0 1 6 7 4 5</td>
+<td>移2 mod 4</td>
+</tr>
+<tr>
+<td>1 0 0 1</td>
+<td>0 0</td>
+<td>0 0</td>
+<td>1 0 3 2 5 4 7 6</td>
+<td>移1 mod 2</td>
+</tr>
+<tr>
+<td>0 0 0 0</td>
+<td>0 0</td>
+<td>0 0</td>
+<td>0 1 2 3 4 5 6 7</td>
+<td>不移/全等</td>
+</tr>
+</tbody>
+</table>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="66" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="66" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>3.Omega网络（多级混洗—交换网络）：</strong>
+<ul>
+<li>有log₂N级，每级N/2个2×2开关模块</li>
+<li>每个开关模块均采用单元控制方式</li>
+<li>不同开关状态组合可实现各种置换、广播或从输入到输出的其它连接</li>
+<li>级间互连采用均匀洗牌连接方式</li>
+<li>各级编号是(n-1)...1,0，即按降序排列</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="67" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="67" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>8×8的Omega网络：</strong>
+<ul>
+<li>单独一级混洗拓扑线路可完成一次数据混洗(σ)</li>
+<li>单独一列二元交换开关在处于&quot;交换&quot;状态时可完成一次交换操作(Cube₀)**</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="68" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="68" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>目的：根据给定的输入/输出对应关系，确定各开关的状态</strong></li>
+<li><strong>方法：源-目的地址异或法</strong></li>
+<li><strong>操作：将任一个输入地址与它要到达的输出地址作异或运算，其结果的bitᵢ控制数据到达的第i级开关，&quot;0&quot;表示&quot;直连&quot;，&quot;1&quot;表示&quot;交换&quot;</strong></li>
+<li><strong>例如：给定传输101B→011B，二者异或结果为110B，于是从101B号输入端开始，把第2、1级开关置为&quot;交换&quot;，第0级开关置为&quot;直连&quot;</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="69" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="69" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>N输入互连网络，可能的置换数总共N!个</strong></li>
+<li><strong>N输入的Omega网，一次通过可实现N^(N/2)个→阻塞网络</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="70" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="70" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>InfiniBand是IBTA行业协会于2000年10月提出的一种工业级的系统网络通信协议</strong></li>
+<li><strong>提供基于交换机的点到点双向串行链路结构，用于处理器节点之间以及处理器节点与输入/输出节点之间的高速互连</strong></li>
+<li><strong>通过交换机在节点之间直接创建一个专用的受保护通道，并通过适配器执行远程直接内存访问（RDMA）和发送/接收卸载</strong></li>
+<li><strong>InfiniBand采用远程直接内存访问（RDMA）实现通过网络在应用程序之间直接传输数据的能力，无需操作系统参与的零拷贝传输</strong></li>
+<li><strong>InfiniBand流量控制是硬件实现的，而TCP是软件实现</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p085.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="71" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="71" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>缓存一致性概念：当多个处理器同时存取内存中的共享数据时也会引入一致性问题</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="72" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="72" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>对称式共享存储器系统结构（SMP）为例说明分析缓存（Cache）一致性问题</strong></li>
+<li><strong>允许共享数据进入Cache，就可能出现多个处理器的Cache中都有同一存储块的副本</strong></li>
+<li><strong>当其中某个处理器对其Cache中的数据进行修改后，就会使得其Cache中的数据与其他Cache中的数据不一致</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="73" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="73" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>缓存一致性：如果对某个数据项的任何读操作均可得到其最新写入的值，则认为这个存储系统是一致的</strong></li>
+<li><strong>存储系统行为的两个不同方面：</strong>
+<ul>
+<li><strong>What</strong>：读操作得到的是什么值</li>
+<li><strong>When</strong>：什么时候才能将已写入的值返回给读操作</li>
+</ul>
+</li>
+<li><strong>需要满足以下条件：</strong>
+<ul>
+<li>处理器P对单元X进行一次写之后又对单元X进行读，读和写之间没有其它处理器对单元X进行写，则P读到的值总是前面写进去的值</li>
+<li>处理器P对单元X进行写之后，另一处理器Q对单元X进行读，读和写之间无其它写，则Q读到的值应为P写进去的值</li>
+<li>对同一单元的写是串行化的，即任意两个处理器对同一单元的两次写，从各个处理器的角度看顺序都是相同的（写串行化）</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p088.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="74" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="74" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>一致性假设：</strong>
+<ul>
+<li>直到所有的处理器均看到了写的结果，这个写操作才算完成</li>
+<li>处理器的任何访存均不能改变写的顺序</li>
+</ul>
+</li>
+<li><strong>在多个处理器中用来维护一致性的协议，关键在于跟踪记录共享数据块的状态</strong></li>
+<li><strong>两类协议：</strong>
+<ul>
+<li>监听式协议（snooping）</li>
+<li>目录式协议（directory）</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="75" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="75" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>监听一致性协议（Snooping）：</strong></li>
+<li><strong>Cache通常连在共享存储器的总线上，当某个Cache需要访问存储器时，它会把请求放到总线上广播出去</strong></li>
+<li><strong>其他各个Cache控制器通过监听总线来判断它们是否有总线上请求的数据块</strong></li>
+<li><strong>每个Cache除了包含物理存储器中块的数据拷贝之外，也保存着各个块的共享状态信息</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p090.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="76" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="76" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>目录式协议（Directory）：</strong></li>
+<li><strong>记录该块的状态</strong></li>
+<li><strong>物理存储器中数据块的共享状态被保存在一个称为目录的地方</strong></li>
+<li><strong>每个节点添加一个目录，相关存储器的目录信息可能保存在多核心处理器的内部或者外部</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p091.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="77" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="77" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>多处理器写更新操作处理：</strong>
+<ul>
+<li><strong>写作废协议（写失效）</strong>：在处理器对某个数据项进行写入之前，保证它拥有对该数据项的唯一的访问权</li>
+<li><strong>写更新协议</strong>：当一个处理器对某数据项进行写入时，通过广播使其它Cache中所有对应于该数据项的副本进行更新</li>
+</ul>
+</li>
+<li><strong>写策略：写直达操作、写回操作</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="78" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="78" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>写失效协议（Write Invalid Protocol）：</strong></li>
+<li><strong>在执行写入操作时会使其他副本失效</strong></li>
+<li><strong>这是最常用的协议</strong></li>
+<li><strong>示例：两个处理器先写、后读某一数据块的情景</strong></li>
+<li><strong>由于写操作需要独占访问，其他所有此数据块副本都必须失效</strong></li>
+<li><strong>再次读取时，数据已失效的处理器会在缓存中发生缺失，从而强制读取数据块的新副本</strong></li>
+<li><strong>这一协议实现了写入串行化</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p093.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="79" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="79" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>失效协议中，共享总线或其他广播介质来执行失效操作</strong></li>
+<li><strong>在写入一个共享块时，执行写入操作的处理器必须获取总线访问权限来广播其失效</strong></li>
+<li><strong>如果两个处理器尝试同时写入共享块，当它们争用总线时，由总线实现这些写入操作的串行化</strong></li>
+<li><strong>写回缓存可以为缓存缺失和写入操作使用相同的监听机制</strong></li>
+<li><strong>每个处理器都监听放在共享总线上的所有地址</strong></li>
+<li><strong>在每个结点内嵌入一个有限状态控制器</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p094.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="80" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="80" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>监听缓存（Snoopy Cache）结构：每个块有一个相关联的独立控制器</strong></li>
+<li><strong>对不同块的监听操作或缓存请求可以独立进行</strong></li>
+<li><strong>实际中，单个控制器允许交错执行以不同块为目标的多个操作</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p095.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="81" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="81" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>每个数据块有三种状态：修改（Modified）、共享（Shared）和无效（Invalid），称之为MSI协议</strong></li>
+<li><strong>共享状态表明专用缓存中的块可能被共享</strong></li>
+<li><strong>已修改状态表明在专用缓存中更新了这个块</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="82" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="82" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>MSI协议状态转换：</strong>
+<ul>
+<li><strong>读取命中</strong>：正常命中，处理器在共享或已修改状态下读取本地缓存中的数据</li>
+<li><strong>读取缺失</strong>：在无效状态下产生读取缺失，将读取缺失放在总线上</li>
+<li><strong>地址冲突缺失</strong>：在共享或已修改状态下产生地址冲突缺失，已修改状态需要写回块</li>
+<li><strong>写命中</strong>：在已修改状态下正常命中，在共享状态下产生一致性操作（失效）</li>
+<li><strong>写缺失</strong>：在无效或共享状态下产生写缺失</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p098.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="83" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="83" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>每个高速缓存行都有状态标志位：</strong>
+<ul>
+<li><strong>M（Modified）</strong>：已修改</li>
+<li><strong>S（Shared）</strong>：共享</li>
+<li><strong>I（Invalid）</strong>：无效</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="84" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="84" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>MSI基本协议的扩展：</strong>
+<ul>
+<li><strong>MESI协议</strong>：在基本MSI协议中添加了&quot;独占&quot;(Exclusive)状态，用于表示缓存块仅在一个缓存中且是干净的</li>
+<li><strong>MOESI协议</strong>：在MESI协议基础之上添加了&quot;拥有&quot;(Owned)状态，表示相关块由该缓存拥有，在存储器中已经过时</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p101.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="85" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="85" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>监听一致性协议的开销和挑战：</strong>
+<ul>
+<li><strong>性能开销</strong>：节点之间需要通信、交换消息和协商，增加网络延迟和计算负载</li>
+<li><strong>节点故障</strong>：协议可能需要额外的机制来处理节点的故障</li>
+<li><strong>异步通信</strong>：无法保证在有限时间内达到一致性</li>
+<li><strong>扩展性</strong>：在大规模系统中的扩展性是一个挑战</li>
+<li><strong>安全性</strong>：对拜占庭容错具有限制</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p102.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="86" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="86" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>Cache缺失归因于三种因素：容量(Capacity)、强制(Compulsory)和冲突(Conflict)</strong></li>
+<li><strong>多处理器之间的通信也会导致缺失，被称为一致性缺失，分为两种情况：</strong>
+<ul>
+<li><strong>真共享缺失</strong>：源自通过缓存一致性机制进行的数据通信</li>
+<li><strong>假共享缺失</strong>：因为使用了基于失效的一致性算法，这种算法利用了数据块的有效位</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="87" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="87" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>集中式数据结构的瓶颈问题：近年，多核处理器的发展迫使设计转向某种分布式存储器，以支持各个处理器的带宽要求</strong></li>
+<li><strong>通过分布式存储器来提高存储器带宽和互连带宽，本地存储器通信与远程存储器通信隔离开来，将降低了对存储器系统和互连网络的带宽要求</strong></li>
+<li><strong>监听式一致性协议的替代方法是目录式协议</strong></li>
+<li><strong>目录中保存了每个可缓存块的状态，包括哪些缓存（或缓存集合）拥有这个块的副本，它是否需要更新等</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p104.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="88" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="88" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>目录式协议的三种状态：</strong>
+<ul>
+<li><strong>共享</strong>：一个或多个节点缓存这个块，存储器的值是最新的</li>
+<li><strong>未缓存</strong>：所有节点都没有这个缓存块的副本</li>
+<li><strong>已修改</strong>：只有一个节点有这个缓存块的副本，它已经对这个块进行了写操作，所以存储副本已经过期。这个处理器被称为这个块的拥有者</li>
+</ul>
+</li>
+<li><strong>目录式协议也必须实现两种主要操作：处理读取缺失和处理写共享块</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p105.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="89" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="89" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>多个进程或者线程需要并发执行时，需要考虑它们之间如何同步</strong></li>
+<li><strong>同步机制通常是以软件例程实现的，这些例程依赖于硬件提供的同步指令</strong></li>
+<li><strong>对于较小型的多处理器或低竞争解决方案，关键硬件功能是拥有不可中断的指令或指令序列，它们能以原子方式获取和修改一个值</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="90" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="90" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>在多处理器中实施同步时所需要的关键功能就是一组能够以原子方式读取和修改存储器的硬件原语</strong></li>
+<li><strong>硬件原语：</strong>
+<ul>
+<li>（1）原子交换（atomic exchange）</li>
+<li>（2）测试并置定（test and set）</li>
+<li>（3）读取并加1（fetch and increment）</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="91" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="91" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>一般利用一对指令构造同步原语，通过第二条指令返回值判断这一对指令是否以原子形式执行</strong></li>
+<li><strong>在RISC-V中，这种指令对包含：</strong>
+<ul>
+<li><strong>LR（load reserved或load linked）</strong>：链接载入指令</li>
+<li><strong>SC（store conditional）</strong>：条件存储指令</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="92" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="92" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>在拥有原子操作之后，就可以使用多处理器的一致性机制来实施自旋锁（spinlock）</strong></li>
+<li><strong>处理器持续用循环来尝试获取锁，直到成功为止</strong></li>
+<li><strong>多处理器支持缓存一致性，就可以使用一致性机制将锁放在缓存中，保持锁值的一致性</strong></li>
+<li><strong>将锁放在缓存中有两个好处：</strong>
+<ul>
+<li>第一，仅通过循环针对本地缓存副本完成&quot;自旋&quot;过程，不需要在每次尝试获取锁时都请求全局存储器访问</li>
+<li>第二个好处是利用了锁访问存在的局域性</li>
+</ul>
+</li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p110.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="93" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="93" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>使用LR/SC原语实现旋转锁操作</strong></li>
+<li><strong>第一个分支形成环绕的循环体，第二个分支解决了两个处理器同时看到锁可用的情况下的争用问题</strong></li>
+<li><strong>改进旋转锁的整体思路是：首先只对本地Cache中锁的副本进行读取和检测，直到发现该锁已经被释放</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="94" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="94" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>旋转锁的主要优点是当重复访问未变锁值时，总是cache读命中，从而减少其内存访问</strong></li>
+<li><strong>在大规模多处理机中，若所有的处理器都同时争用同一个锁，则会导致大量锁争用和通信开销</strong></li>
+<li><strong>当竞争不激烈且同步操作较少时，主要关心的是一个同步原语操作的延迟</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="95" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="95" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>当多个处理器通过共享变量进行通信时，缓存视图一致性（coherence）保证了多个处理器读到存储器内容是一致的</strong></li>
+<li><strong>不同处理器上程序读写多个共享变量次序和内存看到的读写次序可能不一样</strong></li>
+<li><strong>其原因在于现代处理器为了优化写性能，会使用写缓存</strong></li>
+<li><strong>如果一个或多个处理器发出的读写次序到达存储器的次序是否相同，则称为存储顺序一致性（consistency）问题</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="96" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="96" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>存储顺序一致性的最简单模型称为顺序一致性模型（sequential consistency）</strong></li>
+<li><strong>顺序一致性要求在不同处理器之间的访问任意交错时，但是存取内存的顺序都是一样的，就像每个处理器是按顺序执行存储器访问操作</strong></li>
+<li><strong>实现顺序一致性模型的最简单方法是要求处理器立刻执行所有存储器访问，直到该访问操作所导致的其他处理器缓存全部失效均告完成为止</strong></li>
+<li><strong>顺序一致性模型给出了一种简单的编程范例，但它可能会大幅度降低性能，特别是当多处理器数目很多或者互连延迟很长时</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p114.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="97" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="97" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>从程序员的角度来看，顺序一致性模型是直观和简单，但有性能方面的不足</strong></li>
+<li><strong>一种更高效的编程模型是程序员通过显示地同步操作控制对共享数据的访问次序</strong></li>
+<li><strong>无论什么情况，一个处理器对某一变量的写入操作与另一个处理器对这个变量的访问（或者为读取，或者为写入）之间由一对同步操作隔离开来</strong></li>
+<li><strong>如果变量可以在未由同步操作进行排序的情况下更新，就会产生数据竞赛（data races）</strong></li>
+<li><strong>几乎所有的程序员都选择使用标准同步库</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p115.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="98" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="98" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"><div class='columns'>
+<div>
+<ul>
+<li><strong>宽松一致性模型的关键思想是允许乱序执行读取和写入操作，但使用同步操作来实施排序</strong></li>
+<li><strong>形式化定义一组规则来描述顺序，其形式为X→Y，也就是说必须在完成操作X之后才能执行操作Y</strong></li>
+<li><strong>放松W→R顺序：得到完全存储排序或处理器一致性模型（Total Store Order，TSO）</strong></li>
+<li><strong>放松W→R和W→W顺序：得到部分存储顺序的模型</strong></li>
+<li><strong>放松四种顺序：得到弱排序、PowerPC一致性模型、释放一致性、RISC-V一致性模型</strong></li>
+<li><strong>更强的一致性模型能够简化编程，但需要更多的硬件确保执行次序</strong></li>
+</ul>
+</div>
+<div>
+<p><img src="images/Ch8p116.png" alt="" style="width:520px;" /></p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="99" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p117.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="99" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="99" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="99" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="100" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="100" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>多级缓存提供包含性（multilevel inclusion），也就是缓存层次结构中上一级都是下一级的子集</strong></li>
+<li><strong>当L1和L2的块大小不同时，一般L2的通常要大得多，而L2中的一个块对应于L1中的多个块</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="101" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="101" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9">
+<ul>
+<li><strong>附录H进一步介绍了多处理器相关的扩展内容</strong></li>
+<li><strong>在8.3节的基础之上讲解了监听协议的局域性、对称共享存储器多处理器的性能和面向分布式共享存储器的目录式一致性协议</strong></li>
+<li><strong>在8.5节的基础之上讲解了宽松一致性模型和包含性及实现</strong></li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="102" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;images/Ch8p120.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="102" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="102" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="content"></section>
+</foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="102" style="" data-marpit-pagination-total="103" data-size="16:9" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="103" data-paginate="true" data-theme="gaia" lang="C" data-marpit-pagination="103" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="103" data-size="16:9"></section>
+<script>!function(){"use strict";const t={h1:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"1"},style:"display: block; font-size: 2em; margin-block-start: 0.67em; margin-block-end: 0.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h2:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"2"},style:"display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h3:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"3"},style:"display: block; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h4:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"4"},style:"display: block; margin-block-start: 1.33em; margin-block-end: 1.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h5:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"5"},style:"display: block; font-size: 0.83em; margin-block-start: 1.67em; margin-block-end: 1.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h6:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"6"},style:"display: block; font-size: 0.67em; margin-block-start: 2.33em; margin-block-end: 2.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},span:{proto:()=>HTMLSpanElement},pre:{proto:()=>HTMLElement,style:"display: block; font-family: monospace; white-space: pre; margin: 1em 0; --marp-auto-scaling-white-space: pre;"}},e="data-marp-auto-scaling-wrapper",i="data-marp-auto-scaling-svg",n="data-marp-auto-scaling-container";class s extends HTMLElement{container;containerSize;containerObserver;svg;svgComputedStyle;svgPreserveAspectRatio="xMinYMid meet";wrapper;wrapperSize;wrapperObserver;constructor(){super();const t=t=>([e])=>{const{width:i,height:n}=e.contentRect;this[t]={width:i,height:n},this.updateSVGRect()};this.attachShadow({mode:"open"}),this.containerObserver=new ResizeObserver(t("containerSize")),this.wrapperObserver=new ResizeObserver((...e)=>{t("wrapperSize")(...e),this.flushSvgDisplay()})}static get observedAttributes(){return["data-downscale-only"]}connectedCallback(){this.shadowRoot.innerHTML=`\n<style>\n  svg[${i}] { display: block; width: 100%; height: auto; vertical-align: top; }\n  span[${n}] { display: table; white-space: var(--marp-auto-scaling-white-space, nowrap); width: max-content; }\n</style>\n<div ${e}>\n  <svg part="svg" ${i}>\n    <foreignObject><span ${n}><slot></slot></span></foreignObject>\n  </svg>\n</div>\n    `.split(/\n\s*/).join(""),this.wrapper=this.shadowRoot.querySelector(`div[${e}]`)??void 0;const t=this.svg;this.svg=this.wrapper?.querySelector(`svg[${i}]`)??void 0,this.svg!==t&&(this.svgComputedStyle=this.svg?window.getComputedStyle(this.svg):void 0),this.container=this.svg?.querySelector(`span[${n}]`)??void 0,this.observe()}disconnectedCallback(){this.svg=void 0,this.svgComputedStyle=void 0,this.wrapper=void 0,this.container=void 0,this.observe()}attributeChangedCallback(){this.observe()}flushSvgDisplay(){const{svg:t}=this;t&&(t.style.display="inline",requestAnimationFrame(()=>{t.style.display=""}))}observe(){this.containerObserver.disconnect(),this.wrapperObserver.disconnect(),this.wrapper&&this.wrapperObserver.observe(this.wrapper),this.container&&this.containerObserver.observe(this.container),this.svgComputedStyle&&this.observeSVGStyle(this.svgComputedStyle)}observeSVGStyle(t){const e=()=>{const i=(()=>{const e=t.getPropertyValue("--preserve-aspect-ratio");if(e)return e.trim();return`x${(({textAlign:t,direction:e})=>{if(t.endsWith("left"))return"Min";if(t.endsWith("right"))return"Max";if("start"===t||"end"===t){let i="rtl"===e;return"end"===t&&(i=!i),i?"Max":"Min"}return"Mid"})(t)}YMid meet`})();i!==this.svgPreserveAspectRatio&&(this.svgPreserveAspectRatio=i,this.updateSVGRect()),t===this.svgComputedStyle&&requestAnimationFrame(e)};e()}updateSVGRect(){let t=Math.ceil(this.containerSize?.width??0);const e=Math.ceil(this.containerSize?.height??0);void 0!==this.dataset.downscaleOnly&&(t=Math.max(t,this.wrapperSize?.width??0));const i=this.svg?.querySelector(":scope > foreignObject");if(i?.setAttribute("width",`${t}`),i?.setAttribute("height",`${e}`),this.svg&&(this.svg.setAttribute("viewBox",`0 0 ${t} ${e}`),this.svg.setAttribute("preserveAspectRatio",this.svgPreserveAspectRatio),this.svg.style.height=t<=0||e<=0?"0":""),this.container){const t=this.svgPreserveAspectRatio.toLowerCase();this.container.style.marginLeft=t.startsWith("xmid")||t.startsWith("xmax")?"auto":"0",this.container.style.marginRight=t.startsWith("xmi")?"auto":"0"}}}const r=(t,{attrs:e={},style:i})=>class extends t{constructor(...t){super(...t);for(const[t,i]of Object.entries(e))this.hasAttribute(t)||this.setAttribute(t,i);this._shadow()}static get observedAttributes(){return["data-auto-scaling"]}connectedCallback(){this._update()}attributeChangedCallback(){this._update()}_shadow(){if(!this.shadowRoot)try{this.attachShadow({mode:"open"})}catch(t){if(!(t instanceof Error&&"NotSupportedError"===t.name))throw t}return this.shadowRoot}_update(){const t=this._shadow();if(t){const e=i?`<style>:host { ${i} }</style>`:"";let n="<slot></slot>";const{autoScaling:s}=this.dataset;if(void 0!==s){n=`<marp-auto-scaling exportparts="svg:auto-scaling" ${"downscale-only"===s?"data-downscale-only":""}>${n}</marp-auto-scaling>`}t.innerHTML=e+n}}};let o;const a=Symbol(),l=()=>o??(o=!!document.createElement("div",{is:"marp-auto-scaling"}).outerHTML.startsWith("<div is"),o);let c;const d="marpitSVGPolyfill:setZoomFactor,",h=Symbol(),g=Symbol();const p=()=>{const t="Apple Computer, Inc."===navigator.vendor,e=t?[v]:[],i={then:e=>(t?(async()=>{if(void 0===c){const t=document.createElement("canvas");t.width=10,t.height=10;const e=t.getContext("2d"),i=new Image(10,10),n=new Promise(t=>{i.addEventListener("load",()=>t())});i.crossOrigin="anonymous",i.src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%201%201%22%3E%3CforeignObject%20width%3D%221%22%20height%3D%221%22%20requiredExtensions%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%3E%3Cdiv%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%20style%3D%22width%3A%201px%3B%20height%3A%201px%3B%20background%3A%20red%3B%20position%3A%20relative%22%3E%3C%2Fdiv%3E%3C%2FforeignObject%3E%3C%2Fsvg%3E",await n,e.drawImage(i,0,0),c=e.getImageData(5,5,1,1).data[3]<128}return c})().then(t=>{null==e||e(t?[v]:[])}):null==e||e([]),i)};return Object.assign(e,i)};let m,u;function v(t){const e="object"==typeof t&&t.target||document,i="object"==typeof t?t.zoom:t;window[g]||(Object.defineProperty(window,g,{configurable:!0,value:!0}),document.body.style.zoom=1.0001,document.body.offsetHeight,document.body.style.zoom=1,window.addEventListener("message",({data:t,origin:e})=>{if(e===window.origin)try{if(t&&"string"==typeof t&&t.startsWith(d)){const[,e]=t.split(","),i=Number.parseFloat(e);Number.isNaN(i)||(u=i)}}catch(t){console.error(t)}}));let n=!1;Array.from(e.querySelectorAll("svg[data-marpit-svg]"),t=>{var e,s,r,o;t.style.transform||(t.style.transform="translateZ(0)");const a=i||u||t.currentScale||1;m!==a&&(m=a,n=a);const l=t.getBoundingClientRect(),{length:c}=t.children;for(let i=0;i<c;i+=1){const n=t.children[i];if(n.getScreenCTM){const t=n.getScreenCTM();if(t){const i=null!==(s=null===(e=n.x)||void 0===e?void 0:e.baseVal.value)&&void 0!==s?s:0,c=null!==(o=null===(r=n.y)||void 0===r?void 0:r.baseVal.value)&&void 0!==o?o:0,d=n.children.length;for(let e=0;e<d;e+=1){const s=n.children[e];if("SECTION"===s.tagName){const{style:e}=s;e.transformOrigin||(e.transformOrigin=`${-i}px ${-c}px`),e.transform=`scale(${a}) matrix(${t.a}, ${t.b}, ${t.c}, ${t.d}, ${t.e-l.left}, ${t.f-l.top}) translateZ(0.0001px)`;break}}}}}}),!1!==n&&Array.from(e.querySelectorAll("iframe"),({contentWindow:t})=>{null==t||t.postMessage(`${d}${n}`,"null"===window.origin?"*":window.origin)})}function w({once:t=!1,target:e=document}={}){const i=function(t=document){if(t[h])return t[h];let e=!0;const i=()=>{e=!1,delete t[h]};Object.defineProperty(t,h,{configurable:!0,value:i});let n=[],s=!1;(async()=>{try{n=await p()}finally{s=!0}})();const r=()=>{for(const e of n)e({target:t});s&&0===n.length||e&&window.requestAnimationFrame(r)};return r(),i}(e);return t?(i(),()=>{}):i}m=1,u=void 0;const b=Symbol(),y=(e=document)=>{if("undefined"==typeof window)throw new Error("Marp Core's browser script is valid only in browser context.");if(((e=document)=>{const i=window[a];i||customElements.define("marp-auto-scaling",s);for(const n of Object.keys(t)){const s=`marp-${n}`,o=t[n].proto();l()&&o!==HTMLElement?i||customElements.define(s,r(o,{style:t[n].style}),{extends:n}):(i||customElements.define(s,r(HTMLElement,t[n])),e.querySelectorAll(`${n}[is="${s}"]`).forEach(t=>{t.outerHTML=t.outerHTML.replace(new RegExp(`^<${n}`,"i"),`<${s}`).replace(new RegExp(`</${n}>$`,"i"),`</${s}>`)}))}window[a]=!0})(e),e[b])return e[b];const i=w({target:e}),n=()=>{i(),delete e[b]},o=Object.assign(n,{cleanup:n,update:()=>y(e)});return Object.defineProperty(e,b,{configurable:!0,value:o}),o},f=document.currentScript;y(f?f.getRootNode():document)}();
+</script></foreignObject></svg></div><script>/*!! License: https://unpkg.com/@marp-team/marp-cli@4.3.1/lib/bespoke.js.LICENSE.txt */
+!function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}var t,n,r=(n||(n=1,t={from:function(e,t){var n,r=1===(e.parent||e).nodeType?e.parent||e:document.querySelector(e.parent||e),o=[].filter.call("string"==typeof e.slides?r.querySelectorAll(e.slides):e.slides||r.children,function(e){return"SCRIPT"!==e.nodeName}),i={},a=function(e,t){return(t=t||{}).index=o.indexOf(e),t.slide=e,t},s=function(e,t){i[e]=(i[e]||[]).filter(function(e){return e!==t})},l=function(e,t){return(i[e]||[]).reduce(function(e,n){return e&&!1!==n(t)},!0)},c=function(e,t){o[e]&&(n&&l("deactivate",a(n,t)),n=o[e],l("activate",a(n,t)))},d=function(e,t){var r=o.indexOf(n)+e;l(e>0?"next":"prev",a(n,t))&&c(r,t)},u={off:s,on:function(e,t){return(i[e]||(i[e]=[])).push(t),s.bind(null,e,t)},fire:l,slide:function(e,t){if(!arguments.length)return o.indexOf(n);l("slide",a(o[e],t))&&c(e,t)},next:d.bind(null,1),prev:d.bind(null,-1),parent:r,slides:o,destroy:function(e){l("destroy",a(n,e)),i={}}};return(t||[]).forEach(function(e){e(u)}),n||c(0),u}}),t),o=e(r);const i=document.body,a=(...e)=>history.replaceState(...e),s="",l="presenter",c="next",d="overview",u=["",l,d,c],f="bespoke-marp-",m=`data-${f}`,g=(e,{protocol:t,host:n,pathname:r,hash:o}=location)=>{const i=e.toString();return`${t}//${n}${r}${i?"?":""}${i}${o}`},p=()=>i.dataset.bespokeView,v=e=>new URLSearchParams(location.search).get(e),h=(e,t={})=>{const n={location,setter:a,...t},r=new URLSearchParams(n.location.search);for(const t of Object.keys(e)){const n=e[t];"string"==typeof n?r.set(t,n):r.delete(t)}try{n.setter({...window.history.state??{}},"",g(r,n.location))}catch(e){console.error(e)}},w=(()=>{const e="bespoke-marp";try{return localStorage.setItem(e,e),localStorage.removeItem(e),!0}catch{return!1}})(),y=e=>{try{return localStorage.getItem(e)}catch{return null}},b=(e,t)=>{try{return localStorage.setItem(e,t),!0}catch{return!1}},k=e=>{try{return localStorage.removeItem(e),!0}catch{return!1}},x=(e,t)=>{const n="aria-hidden";t?e.setAttribute(n,"true"):e.removeAttribute(n)},E=e=>{e.parent.classList.add(`${f}parent`),e.slides.forEach(e=>e.classList.add(`${f}slide`)),e.on("activate",t=>{const n=`${f}active`,r=t.slide,o=r.classList,i=!o.contains(n);if(e.slides.forEach(e=>{e.classList.remove(n),x(e,!0)}),o.add(n),x(r,!1),i){const e=`${n}-ready`;o.add(e),document.body.clientHeight,o.remove(e)}})},$=e=>{let t=0,n=0;Object.defineProperty(e,"fragments",{enumerable:!0,value:e.slides.map(e=>[null,...e.querySelectorAll("[data-marpit-fragment]")])});const r=r=>void 0!==e.fragments[t][n+r],o=(r,o)=>{t=r,n=o,e.fragments.forEach((e,t)=>{e.forEach((e,n)=>{if(null==e)return;const i=t<r||t===r&&n<=o;e.setAttribute(`${m}fragment`,(i?"":"in")+"active");const a=`${m}current-fragment`;t===r&&n===o?e.setAttribute(a,"current"):e.removeAttribute(a)})}),e.fragmentIndex=o;const i={slide:e.slides[r],index:r,fragments:e.fragments[r],fragmentIndex:o};e.fire("fragment",i)};e.on("next",({fragment:i=!0})=>{if(i){if(r(1))return o(t,n+1),!1;const i=t+1;e.fragments[i]&&o(i,0)}else{const r=e.fragments[t].length;if(n+1<r)return o(t,r-1),!1;const i=e.fragments[t+1];i&&o(t+1,i.length-1)}}),e.on("prev",({fragment:i=!0})=>{if(r(-1)&&i)return o(t,n-1),!1;const a=t-1;e.fragments[a]&&o(a,e.fragments[a].length-1)}),e.on("slide",({index:t,fragment:n})=>{let r=0;if(void 0!==n){const o=e.fragments[t];if(o){const{length:e}=o;r=-1===n?e-1:Math.min(Math.max(n,0),e-1)}}o(t,r)}),o(0,0)},L=document,S=()=>!(!L.fullscreenEnabled&&!L.webkitFullscreenEnabled),P=()=>!(!L.fullscreenElement&&!L.webkitFullscreenElement),_=e=>{e.fullscreen=()=>{S()&&(async()=>{P()?(L.exitFullscreen||L.webkitExitFullscreen)?.call(L):((e=L.body)=>{(e.requestFullscreen||e.webkitRequestFullscreen)?.call(e)})()})()},document.addEventListener("keydown",t=>{"f"!==t.key&&"F11"!==t.key||t.altKey||t.ctrlKey||t.metaKey||!S()||(e.fullscreen(),t.preventDefault())})},O=`${f}inactive`,T=(e=2e3)=>({parent:t,fire:n})=>{const r=t.classList,o=e=>n(`marp-${e?"":"in"}active`);let i;const a=()=>{i&&clearTimeout(i),i=setTimeout(()=>{r.add(O),o()},e),r.contains(O)&&(r.remove(O),o(!0))};for(const e of["mousedown","mousemove","touchend"])document.addEventListener(e,a);setTimeout(a,0)},I=["AUDIO","BUTTON","INPUT","SELECT","TEXTAREA","VIDEO"],M=e=>{e.parent.addEventListener("keydown",e=>{if(!e.target)return;const t=e.target;(I.includes(t.nodeName)||"true"===t.contentEditable)&&e.stopPropagation()})},A=e=>{window.addEventListener("load",()=>{for(const t of e.slides){const e=t.querySelector("marp-auto-scaling, [data-auto-scaling], [data-marp-fitting]");t.setAttribute(`${m}load`,e?"":"hideable")}})},C=({interval:e=250}={})=>t=>{document.addEventListener("keydown",e=>{if(" "===e.key&&e.shiftKey)t.prev();else if("ArrowLeft"===e.key||"ArrowUp"===e.key||"PageUp"===e.key)t.prev({fragment:!e.shiftKey});else if(" "!==e.key||e.shiftKey)if("ArrowRight"===e.key||"ArrowDown"===e.key||"PageDown"===e.key)t.next({fragment:!e.shiftKey});else if("End"===e.key)t.slide(t.slides.length-1,{fragment:-1});else{if("Home"!==e.key)return;t.slide(0)}else t.next();e.preventDefault()});let n,r,o=0;t.parent.addEventListener("wheel",i=>{let a=!1;const s=(e,t)=>{e&&(a=a||((e,t)=>((e,t)=>{const n="X"===t?"Width":"Height";return e[`client${n}`]<e[`scroll${n}`]})(e,t)&&((e,t)=>{const{overflow:n}=e,r=e[`overflow${t}`];return"auto"===n||"scroll"===n||"auto"===r||"scroll"===r})(getComputedStyle(e),t))(e,t)),e?.parentElement&&s(e.parentElement,t)};if(0!==i.deltaX&&s(i.target,"X"),0!==i.deltaY&&s(i.target,"Y"),a)return;i.preventDefault();const l=Math.sqrt(i.deltaX**2+i.deltaY**2);if(void 0!==i.wheelDelta){if(void 0===i.webkitForce&&Math.abs(i.wheelDelta)<40)return;if(i.deltaMode===i.DOM_DELTA_PIXEL&&l<4)return}else if(i.deltaMode===i.DOM_DELTA_PIXEL&&l<12)return;r&&clearTimeout(r),r=setTimeout(()=>{n=0},e);const c=Date.now()-o<e,d=l<=n;if(n=l,c||d)return;let u;(i.deltaX>0||i.deltaY>0)&&(u="next"),(i.deltaX<0||i.deltaY<0)&&(u="prev"),u&&(t[u](),o=Date.now())})},D=(e=`.${f}osc`)=>{const t=document.querySelector(e);if(!t)return()=>{};const n=(e,n)=>{t.querySelectorAll(`[${m}osc=${JSON.stringify(e)}]`).forEach(n)};if(S()||n("fullscreen",e=>e.style.display="none"),!w){const e=(e,t)=>{e.disabled=!0,e.title=`${t} is disabled due to restricted localStorage.`};n("presenter",t=>e(t,"Presenter view")),n("overview",t=>e(t,"Overview view"))}return e=>{t.addEventListener("click",t=>{if(t.target instanceof HTMLElement){const{bespokeMarpOsc:n}=t.target.dataset;n&&t.target.blur();const r={fragment:!t.shiftKey};"next"===n?e.next(r):"prev"===n?e.prev(r):"fullscreen"===n?e?.fullscreen():"presenter"===n?e.openPresenterView():"overview"===n&&e.toggleOverviewView()}}),e.parent.appendChild(t),e.on("activate",({index:t})=>{n("page",n=>n.textContent=`Page ${t+1} of ${e.slides.length}`)}),e.on("fragment",({index:t,fragments:r,fragmentIndex:o})=>{n("prev",e=>e.disabled=0===t&&0===o),n("next",n=>n.disabled=t===e.slides.length-1&&o===r.length-1)}),e.on("marp-active",()=>x(t,!1)),e.on("marp-inactive",()=>x(t,!0)),S()&&(e=>{for(const t of["","webkit"])L.addEventListener(t+"fullscreenchange",e)})(()=>n("fullscreen",e=>e.classList.toggle("exit",S()&&P())))}},N=e=>{if(e.syncKey&&"string"==typeof e.syncKey)return!0;throw new Error("The current instance of Bespoke.js is incompatible with Marp bespoke sync plugin.")},B=(e={})=>{const t=e.key||window.history.state?.marpBespokeSyncKey||Math.random().toString(36).slice(2),n=`bespoke-marp-sync-${t}`;var r;r={marpBespokeSyncKey:t},h({},{setter:(e,...t)=>a({...e,...r},...t)});const o=()=>{const e=y(n);return e?JSON.parse(e):Object.create(null)},i=e=>{const t=o(),r={...t,...e(t)};return b(n,JSON.stringify(r)),r},s=()=>{window.removeEventListener("pageshow",s),i(e=>({reference:(e.reference||0)+1}))};return e=>{s(),Object.defineProperty(e,"syncKey",{value:t,enumerable:!0});let r=!0;setTimeout(()=>{e.on("fragment",e=>{r&&i(()=>({index:e.index,fragmentIndex:e.fragmentIndex}))})},0),window.addEventListener("storage",t=>{if(t.key===n&&t.oldValue&&t.newValue){const n=JSON.parse(t.oldValue),o=JSON.parse(t.newValue);if(n.index!==o.index||n.fragmentIndex!==o.fragmentIndex)try{r=!1,e.slide(o.index,{fragment:o.fragmentIndex,forSync:!0})}finally{r=!0}}});const a=()=>{const{reference:e}=o();void 0===e||e<=1?k(n):i(()=>({reference:e-1}))};window.addEventListener("pagehide",e=>{e.persisted&&window.addEventListener("pageshow",s),a()}),e.on("destroy",a)}},K=e=>{w&&document.addEventListener("keydown",t=>{("o"!==t.key||t.altKey||t.ctrlKey||t.metaKey)&&"Escape"!==t.key||(t.preventDefault(),e())})};let q=null;const V=({closeOnSelect:e=!0}={})=>t=>{N(t);const n=n=>{const r=(()=>{if(!q||!q.isConnected){q=document.createElement("div"),q.className=`${f}overview`,q.inert=!0;const n=document.createElement("iframe");n.src=(()=>{const n=new URLSearchParams(location.search);return n.set("view","overview"),n.set("sync",t.syncKey),e&&n.set("closeOnSelect","1"),g(n)})(),q.append(n),document.body.append(q)}return q})(),o=n??!r.dataset.open;setTimeout(()=>{if(r.dataset.open=o?"1":"",r.inert=!o,t.skipTransition=o,o){const e=r.querySelector("iframe");try{e?.contentWindow?.focus()}catch{e?.focus()}}else window.focus()},0)};Object.defineProperties(t,{toggleOverviewView:{enumerable:!0,value:n}}),window.addEventListener("message",e=>{e.origin===window.origin&&"closeOverview"===e.data&&n(!1)}),K(n)},j=e=>{const{title:t}=document;document.title="[Overview]"+(t?` - ${t}`:"");const n=!!v("closeOnSelect"),r=()=>{window.parent.postMessage("closeOverview","null"===window.origin?"*":window.origin)};if(e.slides.forEach((t,o)=>{t.tabIndex=0;const i=()=>{e.slide(o,{fragment:-1}),n&&r()};t.addEventListener("click",i),t.addEventListener("keydown",e=>{"Enter"!==e.key&&" "!==e.key||(e.preventDefault(),i())})}),window.addEventListener("keydown",t=>{const n=e.slide(),r=t=>{const r=t=>{const n=e.slides[t].getBoundingClientRect();return[Math.round((n.left+n.right)/2),Math.round((n.top+n.bottom)/2)]};let o=null,i=n;do{const e=r(i);if(o){if(Math.abs(e[0]-o[0])<2)return i}else o=e;i+=t}while(i>=0&&i<e.slides.length);return n};if("ArrowLeft"===t.key)e.slide(Math.max(n-1,0),{fragment:-1});else if("ArrowRight"===t.key)e.slide(Math.min(n+1,e.slides.length-1),{fragment:-1});else if("ArrowUp"===t.key)e.slide(r(-1),{fragment:-1});else if("ArrowDown"===t.key)e.slide(r(1),{fragment:-1});else if("End"===t.key)e.slide(e.slides.length-1,{fragment:-1});else{if("Home"!==t.key)return;e.slide(0,{fragment:-1})}t.preventDefault();const o=e.slide();e.slides[o]?.focus?.(),e.slides[o]?.scrollIntoView?.({behavior:"smooth",block:"nearest"})}),e.on("slide",({index:t})=>{e.slides[t]?.scrollIntoView?.({behavior:"smooth",block:"nearest"})}),window.parent!==window){K(r);const e=document.createElement("header");e.className=`${f}overview-header`;const t=document.createElement("button");t.className=`${f}overview-close`,t.type="button",t.title="Close overview",t.textContent=t.title,t.addEventListener("click",r),e.append(t),document.body.prepend(e)}},F=()=>{const e=p();return{[s]:V(),[l]:V({closeOnSelect:!1}),[d]:j}[e]},U=e=>{window.addEventListener("message",t=>{if(t.origin!==window.origin)return;const[n,r]=t.data.split(":");if("navigate"===n){const[t,n]=r.split(",");let o=Number.parseInt(t,10),i=Number.parseInt(n,10)+1;i>=e.fragments[o].length&&(o+=1,i=0),e.slide(o,{fragment:i})}})};var R,X,H,W,J,Y,z,G={exports:{}},Q=(R||(R=1,G.exports=(X=["area","base","br","col","command","embed","hr","img","input","keygen","link","meta","param","source","track","wbr"],H=function(e){return String(e).replace(/[&<>"']/g,function(e){return"&"+W[e]+";"})},W={"&":"amp","<":"lt",">":"gt",'"':"quot","'":"apos"},J="dangerouslySetInnerHTML",Y={className:"class",htmlFor:"for"},z={},function(e,t){var n=[],r="";t=t||{};for(var o=arguments.length;o-- >2;)n.push(arguments[o]);if("function"==typeof e)return t.children=n.reverse(),e(t);if(e){if(r+="<"+e,t)for(var i in t)!1!==t[i]&&null!=t[i]&&i!==J&&(r+=" "+(Y[i]?Y[i]:H(i))+'="'+H(t[i])+'"');r+=">"}if(-1===X.indexOf(e)){if(t[J])r+=t[J].__html;else for(;n.length;){var a=n.pop();if(a)if(a.pop)for(var s=a.length;s--;)n.push(a[s]);else r+=!0===z[a]?a:H(a)}r+=e?"</"+e+">":""}return z[r]=!0,r})),G.exports),Z=e(Q);const ee=({children:e})=>Z(null,null,...e),te=`${f}presenter-`,ne={container:`${te}container`,dragbar:`${te}dragbar-container`,next:`${te}next`,nextContainer:`${te}next-container`,noteContainer:`${te}note-container`,noteWrapper:`${te}note-wrapper`,noteButtons:`${te}note-buttons`,infoContainer:`${te}info-container`,infoPageArea:`${te}info-page-area`,infoPage:`${te}info-page`,infoPagePrev:`${te}info-page-prev`,infoPageNext:`${te}info-page-next`,noteButtonsBigger:`${te}note-bigger`,noteButtonsSmaller:`${te}note-smaller`,infoTime:`${te}info-time`,infoTimer:`${te}info-timer`},re=e=>{const{title:t}=document;document.title="[Presenter view]"+(t?` - ${t}`:"");const n={},r=e=>(n[e]=n[e]||document.querySelector(`.${e}`),n[e]);document.body.appendChild((e=>{const t=document.createElement("div");return t.className=ne.container,t.appendChild(e),t.insertAdjacentHTML("beforeend",Z(ee,null,Z("div",{class:ne.nextContainer},Z("iframe",{class:ne.next,src:"?view=next"})),Z("div",{class:ne.dragbar}),Z("div",{class:ne.noteContainer},Z("div",{class:ne.noteWrapper}),Z("div",{class:ne.noteButtons},Z("button",{class:ne.noteButtonsSmaller,tabindex:"-1",title:"Smaller notes font size"},"Smaller notes font size"),Z("button",{class:ne.noteButtonsBigger,tabindex:"-1",title:"Bigger notes font size"},"Bigger notes font size"))),Z("div",{class:ne.infoContainer},Z("div",{class:ne.infoPageArea},Z("button",{class:ne.infoPagePrev,tabindex:"-1",title:"Previous"},"Previous"),Z("button",{class:ne.infoPage}),Z("button",{class:ne.infoPageNext,tabindex:"-1",title:"Next"},"Next")),Z("time",{class:ne.infoTime,title:"Current time"}),Z("time",{class:ne.infoTimer,title:"Timer"})))),t})(e.parent)),(e=>{let t=!1;r(ne.dragbar).addEventListener("mousedown",()=>{t=!0,r(ne.dragbar).classList.add("active")}),window.addEventListener("mouseup",()=>{t=!1,r(ne.dragbar).classList.remove("active")}),window.addEventListener("mousemove",e=>{if(!t)return;const n=e.clientX/document.documentElement.clientWidth*100;r(ne.container).style.setProperty("--bespoke-marp-presenter-split-ratio",`${Math.max(0,Math.min(100,n))}%`)}),r(ne.nextContainer).addEventListener("click",()=>e.next());const n=r(ne.next),o=(i=n,(e,t)=>i.contentWindow?.postMessage(`navigate:${e},${t}`,"null"===window.origin?"*":window.origin));var i;n.addEventListener("load",()=>{r(ne.nextContainer).classList.add("active"),o(e.slide(),e.fragmentIndex),e.on("fragment",({index:e,fragmentIndex:t})=>o(e,t))});const a=document.querySelectorAll(".bespoke-marp-note");a.forEach(e=>{e.addEventListener("keydown",e=>e.stopPropagation()),r(ne.noteWrapper).appendChild(e)}),e.on("activate",()=>a.forEach(t=>t.classList.toggle("active",t.dataset.index==e.slide())));let s=0;const l=e=>{s=Math.max(-5,s+e),r(ne.noteContainer).style.setProperty("--bespoke-marp-note-font-scale",(1.2**s).toFixed(4))},c=()=>l(1),d=()=>l(-1),u=r(ne.noteButtonsBigger),f=r(ne.noteButtonsSmaller);u.addEventListener("click",()=>{u.blur(),c()}),f.addEventListener("click",()=>{f.blur(),d()}),document.addEventListener("keydown",e=>{"+"===e.key&&c(),"-"===e.key&&d()},!0);const m=r(ne.infoPage);e.on("activate",({index:t})=>{m.textContent=`${t+1} / ${e.slides.length}`}),m.addEventListener("click",()=>{m.blur(),e.toggleOverviewView()});const g=r(ne.infoPagePrev),p=r(ne.infoPageNext);g.addEventListener("click",t=>{g.blur(),e.prev({fragment:!t.shiftKey})}),p.addEventListener("click",t=>{p.blur(),e.next({fragment:!t.shiftKey})}),e.on("fragment",({index:t,fragments:n,fragmentIndex:r})=>{g.disabled=0===t&&0===r,p.disabled=t===e.slides.length-1&&r===n.length-1});let v=new Date;const h=()=>{const e=new Date,t=e=>`${Math.floor(e)}`.padStart(2,"0"),n=e.getTime()-v.getTime(),o=t(n/1e3%60),i=t(n/1e3/60%60),a=t(n/36e5%24);r(ne.infoTime).textContent=e.toLocaleTimeString(),r(ne.infoTimer).textContent=`${a}:${i}:${o}`};h(),setInterval(h,250),r(ne.infoTimer).addEventListener("click",()=>{v=new Date})})(e)},oe=e=>{N(e),Object.defineProperties(e,{openPresenterView:{enumerable:!0,value:ie},presenterUrl:{enumerable:!0,get:ae}}),w&&document.addEventListener("keydown",t=>{"p"!==t.key||t.altKey||t.ctrlKey||t.metaKey||(t.preventDefault(),e.openPresenterView())})};function ie(){const{max:e,floor:t}=Math,n=e(t(.85*window.innerWidth),640),r=e(t(.85*window.innerHeight),360);return window.open(this.presenterUrl,te+this.syncKey,`width=${n},height=${r},menubar=no,toolbar=no`)}function ae(){const e=new URLSearchParams(location.search);return e.set("view","presenter"),e.set("sync",this.syncKey),g(e)}const se=e=>{const t=p();return t===c&&e.appendChild(document.createElement("span")),{[s]:oe,[l]:re,[c]:U}[t]},le=e=>{e.on("activate",t=>{document.querySelectorAll(".bespoke-progress-parent > .bespoke-progress-bar").forEach(n=>{n.style.flexBasis=100*t.index/(e.slides.length-1)+"%"})})},ce=e=>{const t=Number.parseInt(e,10);return Number.isNaN(t)?null:t},de=(e={})=>{const t={history:!0,...e};return e=>{let n=!0;const r=e=>{const t=n;try{return n=!0,e()}finally{n=t}},o=(t={fragment:!0})=>{let n=t.fragment?ce(v("f")||""):null;((t,n)=>{const{min:r,max:o}=Math,{fragments:i,slides:a}=e,s=o(0,r(t,a.length-1)),l=o(0,r(n||0,i[s].length-1));s===e.slide()&&l===e.fragmentIndex||e.slide(s,{fragment:l})})((()=>{if(location.hash){const[t]=location.hash.slice(1).split(":~:");if(/^\d+$/.test(t))return(ce(t)??1)-1;const r=document.getElementById(t)||document.querySelector(`a[name="${CSS.escape(t)}"]`);if(r){const{length:t}=e.slides;for(let o=0;o<t;o+=1)if(e.slides[o].contains(r)){const t=e.fragments?.[o],i=r.closest("[data-marpit-fragment]");if(t&&i){const e=t.indexOf(i);e>=0&&(n=e)}return o}}}return 0})(),n)};e.on("fragment",({index:e,fragmentIndex:r})=>{n||h({f:0===r||r.toString()},{location:{...location,hash:`#${e+1}`},setter:(...e)=>t.history?history.pushState(...e):history.replaceState(...e)})}),setTimeout(()=>{o(),window.addEventListener("hashchange",()=>r(()=>{o({fragment:!1}),h({f:void 0})})),window.addEventListener("popstate",()=>{n||r(()=>o())}),n=!1},0)}},{PI:ue,abs:fe,sqrt:me,atan2:ge}=Math,pe={passive:!0},ve=({slope:e=-.7,swipeThreshold:t=30}={})=>n=>{let r;const o=n.parent,i=e=>{const t=o.getBoundingClientRect();return{x:e.pageX-(t.left+t.right)/2,y:e.pageY-(t.top+t.bottom)/2}};o.addEventListener("touchstart",({touches:e})=>{r=1===e.length?i(e[0]):void 0},pe),o.addEventListener("touchmove",e=>{if(r)if(1===e.touches.length){e.preventDefault();const t=i(e.touches[0]),n=t.x-r.x,o=t.y-r.y;r.delta=me(fe(n)**2+fe(o)**2),r.radian=ge(n,o)}else r=void 0}),o.addEventListener("touchend",o=>{if(r){if(r.delta&&r.delta>=t&&r.radian){const t=(r.radian-e+ue)%(2*ue)-ue;n[t<0?"next":"prev"](),o.stopPropagation()}r=void 0}},pe)},he=new Map;he.clear(),he.set("none",{backward:{both:void 0,incoming:void 0,outgoing:void 0},forward:{both:void 0,incoming:void 0,outgoing:void 0}});const we={both:"",outgoing:"outgoing-",incoming:"incoming-"},ye={forward:"",backward:"-backward"},be=e=>`--marp-bespoke-transition-animation-${e}`,ke=e=>`--marp-transition-${e}`,xe=be("name"),Ee=be("duration"),$e=e=>new Promise(t=>{const n={},r=document.createElement("div"),o=e=>{r.remove(),t(e)};r.addEventListener("animationstart",()=>o(n)),Object.assign(r.style,{animationName:e,animationDuration:"1s",animationFillMode:"both",animationPlayState:"paused",position:"absolute",pointerEvents:"none"}),document.body.appendChild(r);const i=getComputedStyle(r).getPropertyValue(ke("duration"));i&&Number.parseFloat(i)>=0&&(n.defaultDuration=i),((e,t)=>{requestAnimationFrame(()=>{e.style.animationPlayState="running",requestAnimationFrame(()=>t(void 0))})})(r,o)}),Le=async e=>he.has(e)?he.get(e):(e=>{const t={},n=[];for(const[r,o]of Object.entries(we))for(const[i,a]of Object.entries(ye)){const s=`marp-${o}transition${a}-${e}`;n.push($e(s).then(e=>{t[i]=t[i]||{},t[i][r]=e?{...e,name:s}:void 0}))}return Promise.all(n).then(()=>t)})(e).then(t=>(he.set(e,t),t)),Se=e=>Object.values(e).flatMap(Object.values).every(e=>!e),Pe=(e,{type:t,backward:n})=>{const r=e[n?"backward":"forward"],o=(()=>{const e=r[t],n=e=>({[xe]:e.name});if(e)return n(e);if(r.both){const e=n(r.both);return"incoming"===t&&(e[be("direction")]="reverse"),e}})();return!o&&n?Pe(e,{type:t,backward:!1}):o||{[xe]:"__bespoke_marp_transition_no_animation__"}},_e=e=>{if(e)try{const t=JSON.parse(e);if((e=>{if("object"!=typeof e)return!1;const t=e;return"string"==typeof t.name&&(void 0===t.duration||"string"==typeof t.duration)})(t))return t}catch{}},Oe="_tSId",Te="_tA",Ie="bespoke-marp-transition-warming-up",Me=window.matchMedia("(prefers-reduced-motion: reduce)"),Ae="__bespoke_marp_transition_reduced_outgoing__",Ce="__bespoke_marp_transition_reduced_incoming__",De={forward:{both:void 0,incoming:{name:Ce},outgoing:{name:Ae}},backward:{both:void 0,incoming:{name:Ce},outgoing:{name:Ae}}},Ne=e=>{if(!document.startViewTransition)return;const t=t=>(void 0!==t&&(e._tD=t),e._tD);let n;t(!1),((...e)=>{CSS.registerProperty({name:ke("duration"),syntax:"<time>",inherits:!0,initialValue:"-1s"});const t=[...new Set(e).values()];return Promise.all(t.map(e=>Le(e))).then()})(...Array.from(document.querySelectorAll("section[data-transition], section[data-transition-back]")).flatMap(e=>[e.dataset.transition,e.dataset.transitionBack].flatMap(e=>{const t=_e(e);return[t?.name,t?.builtinFallback?`__builtin__${t.name}`:void 0]}).filter(e=>!!e))).then(()=>{document.querySelectorAll("style").forEach(e=>{e.innerHTML=e.innerHTML.replace(/--marp-transition-duration:[^;}]*[;}]/g,e=>e.slice(0,-1)+"!important"+e.slice(-1))})});const r=(n,{back:r,cond:o})=>i=>{const a=t();if(a)return!!i[Te]||!("object"!=typeof a||(a.skipTransition(),!i.forSync));if(e.skipTransition)return!0;if(!o(i))return!0;const s=e.slides[e.slide()],l=()=>i.back??r,c="data-transition"+(l()?"-back":""),d=s.querySelector(`section[${c}]`);if(!d)return!0;const u=_e(d.getAttribute(c)??void 0);return!u||((async(e,{builtinFallback:t=!0}={})=>{let n=await Le(e);if(Se(n)){if(!t)return;return n=await Le(`__builtin__${e}`),Se(n)?void 0:n}return n})(u.name,{builtinFallback:u.builtinFallback}).then(e=>{if(!e){t(!0);try{n(i)}finally{t(!1)}return}let r=e;Me.matches&&(console.warn("Use a constant animation to transition because preferring reduced motion by viewer has detected."),r=De);const o=document.getElementById(Oe);o&&o.remove();const a=document.createElement("style");a.id=Oe,document.head.appendChild(a),((e,t)=>{const n=[`:root{${ke("direction")}:${t.backward?-1:1};}`,":root:has(.bespoke-marp-inactive){cursor:none;}"],r=t=>{const n=e[t].both?.defaultDuration||e[t].outgoing?.defaultDuration||e[t].incoming?.defaultDuration;return"forward"===t?n:n||r("forward")},o=t.duration||r(t.backward?"backward":"forward");void 0!==o&&n.push(`::view-transition-group(*){${Ee}:${o};}`);const i=e=>Object.entries(e).map(([e,t])=>`${e}:${t};`).join("");return n.push(`::view-transition-old(root){${i(Pe(e,{...t,type:"outgoing"}))}}`,`::view-transition-new(root){${i(Pe(e,{...t,type:"incoming"}))}}`),n})(r,{backward:l(),duration:u.duration}).forEach(e=>a.sheet?.insertRule(e));const s=document.documentElement.classList;s.add(Ie);let c=!1;const d=()=>{c||(n(i),c=!0,s.remove(Ie))},f=()=>{t(!1),a.remove(),s.remove(Ie)};try{t(!0);const e=document.startViewTransition(d);t(e),e.finished.finally(f)}catch(e){console.error(e),d(),f()}}),!1)};e.on("prev",r(t=>e.prev({...t,[Te]:!0}),{back:!0,cond:e=>e.index>0&&!((e.fragment??1)&&n.fragmentIndex>0)})),e.on("next",r(t=>e.next({...t,[Te]:!0}),{cond:t=>t.index+1<e.slides.length&&!(n.fragmentIndex+1<n.fragments.length)})),setTimeout(()=>{e.on("slide",r(t=>e.slide(t.index,{...t,[Te]:!0}),{cond:t=>{const n=e.slide();return t.index!==n&&(t.back=t.index<n,!0)}}))},0),e.on("fragment",e=>{n=e})};let Be;const Ke=()=>(void 0===Be&&(Be="wakeLock"in navigator&&navigator.wakeLock),Be),qe=async()=>{const e=Ke();if(e)try{return await e.request("screen")}catch(e){console.warn(e)}return null},Ve=async()=>{if(!Ke())return;let e;const t=()=>{e&&"visible"===document.visibilityState&&qe()};for(const e of["visibilitychange","fullscreenchange"])document.addEventListener(e,t);return e=await qe(),e};((e=document.getElementById(":$p"))=>{(()=>{const e=v("view");i.dataset.bespokeView=u.some(t=>t&&t===e)?e:""})();const t=(e=>{const t=v(e);return h({[e]:void 0}),t})("sync")||void 0;o.from(e,((...e)=>{const t=u.findIndex(e=>p()===e);return e.map(([e,n])=>e[t]&&n).filter(e=>e)})([[1,1,1,0],B({key:t})],[[1,1,0,1],se(e)],[[1,1,0,0],M],[[1,1,1,1],E],[[1,0,0,0],T()],[[1,1,1,1],A],[[1,1,1,1],de({history:!1})],[[1,1,0,0],C()],[[1,1,1,0],_],[[1,0,0,0],le],[[1,1,0,0],ve()],[[1,0,0,0],D()],[[1,1,1,0],F()],[[1,0,0,0],Ne],[[1,1,1,1],$],[[1,1,1,0],Ve]))})()}();</script></body></html>
