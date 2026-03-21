@@ -1,8 +1,8 @@
 name: Build & Deploy
 
-# Triggers only when Marp source files (.md) or this workflow changes.
-# Compiled HTML is pushed to main WITHOUT triggering another run
-# because the path filter '**.md' does NOT match dist/*.html files.
+# Only trigger on .md source changes or this workflow file.
+# The commit step pushes .html files, which do NOT match '**.md',
+# so this workflow does NOT trigger itself in a loop.
 on:
   push:
     branches:
@@ -10,13 +10,10 @@ on:
     paths:
       - '**.md'
       - '.github/workflows/deploy.yml'
-
-  # Allow manual trigger from GitHub Actions UI
   workflow_dispatch:
 
 concurrency:
   group: deploy
-  # Cancel any in-progress run so we don't pile up queued jobs
   cancel-in-progress: true
 
 jobs:
@@ -30,107 +27,90 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: '.github/workflows/deploy.yml'
 
       - name: Install marp-cli
         run: npm install -g @marp-team/marp-cli@4.3.1
 
+      # Compile index page → index.html (root)
       - name: Compile index page
-        run: npx @marp-team/marp-cli index.md --html --output ./
+        run: npx @marp-team/marp-cli index.md --html --output ./index.html
 
+      # Compile each chapter → ChN/index.html, then alias → ChN.html at root
       - name: Compile Ch1 - 计算机系统结构概述
         run: |
-          npx @marp-team/marp-cli Ch1/Ch1_计算机系统结构概述.md --html \
-            --output ./Ch1/ --images png
-          # Place a short-name alias at root for easy linking
+          npx @marp-team/marp-cli Ch1/Ch1_计算机系统结构概述.md --html --output ./Ch1/index.html
           cp Ch1/index.html ./Ch1.html
 
       - name: Compile Ch2 - 指令系统
         run: |
-          npx @marp-team/marp-cli Ch2/Ch2_指令系统.md --html \
-            --output ./Ch2/ --images png
+          npx @marp-team/marp-cli Ch2/Ch2_指令系统.md --html --output ./Ch2/index.html
           cp Ch2/index.html ./Ch2.html
 
       - name: Compile Ch3 - 流水线处理器
         run: |
-          npx @marp-team/marp-cli Ch3/Ch3_流水线处理器.md --html \
-            --output ./Ch3/ --images png
+          npx @marp-team/marp-cli Ch3/Ch3_流水线处理器.md --html --output ./Ch3/index.html
           cp Ch3/index.html ./Ch3.html
 
       - name: Compile Ch4 - 指令级并行处理
         run: |
-          npx @marp-team/marp-cli Ch4/Ch4_指令级并行处理.md --html \
-            --output ./Ch4/ --images png
+          npx @marp-team/marp-cli Ch4/Ch4_指令级并行处理.md --html --output ./Ch4/index.html
           cp Ch4/index.html ./Ch4.html
 
       - name: Compile Ch5 - 内存系统
         run: |
-          npx @marp-team/marp-cli Ch5/Ch5_内存系统.md --html \
-            --output ./Ch5/ --images png
+          npx @marp-team/marp-cli Ch5/Ch5_内存系统.md --html --output ./Ch5/index.html
           cp Ch5/index.html ./Ch5.html
 
       - name: Compile Ch6 - 外存系统
         run: |
-          npx @marp-team/marp-cli Ch6/Ch6_外存系统.md --html \
-            --output ./Ch6/ --images png
+          npx @marp-team/marp-cli Ch6/Ch6_外存系统.md --html --output ./Ch6/index.html
           cp Ch6/index.html ./Ch6.html
 
       - name: Compile Ch7 - 数据级并行
         run: |
-          npx @marp-team/marp-cli Ch7/Ch7_数据级并行.md --html \
-            --output ./Ch7/ --images png
+          npx @marp-team/marp-cli Ch7/Ch7_数据级并行.md --html --output ./Ch7/index.html
           cp Ch7/index.html ./Ch7.html
 
       - name: Compile Ch8 - 多处理器
         run: |
-          npx @marp-team/marp-cli Ch8/Ch8_多处理器.md --html \
-            --output ./Ch8/ --images png
+          npx @marp-team/marp-cli Ch8/Ch8_多处理器.md --html --output ./Ch8/index.html
           cp Ch8/index.html ./Ch8.html
 
       - name: Compile Ch9 - 计算机集群和数据中心
         run: |
-          npx @marp-team/marp-cli Ch9/Ch9_计算机集群和数据中心.md --html \
-            --output ./Ch9/ --images png
+          npx @marp-team/marp-cli Ch9/Ch9_计算机集群和数据中心.md --html --output ./Ch9/index.html
           cp Ch9/index.html ./Ch9.html
 
       - name: Compile Ch10 - 专用加速器
         run: |
-          npx @marp-team/marp-cli Ch10/Ch10_专用加速器.md --html \
-            --output ./Ch10/ --images png
+          npx @marp-team/marp-cli Ch10/Ch10_专用加速器.md --html --output ./Ch10/index.html
           cp Ch10/index.html ./Ch10.html
 
+      # Commit & push
       - name: Configure Git identity
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Commit compiled HTML
+      - name: Commit and push compiled HTML
         run: |
           git add \
             index.html \
-            Ch1.html Ch1/ \
-            Ch2.html Ch2/ \
-            Ch3.html Ch3/ \
-            Ch4.html Ch4/ \
-            Ch5.html Ch5/ \
-            Ch6.html Ch6/ \
-            Ch7.html Ch7/ \
-            Ch8.html Ch8/ \
-            Ch9.html Ch9/ \
-            Ch10.html Ch10/ \
+            Ch1.html Ch1/index.html Ch1/images/ \
+            Ch2.html Ch2/index.html Ch2/images/ \
+            Ch3.html Ch3/index.html Ch3/images/ \
+            Ch4.html Ch4/index.html Ch4/images/ \
+            Ch5.html Ch5/index.html Ch5/images/ \
+            Ch6.html Ch6/index.html Ch6/images/ \
+            Ch7.html Ch7/index.html Ch7/images/ \
+            Ch8.html Ch8/index.html Ch8/images/ \
+            Ch9.html Ch9/index.html Ch9/images/ \
+            Ch10.html Ch10/index.html Ch10/images/ \
             images/
-          # Only commit if there are changes
           if git diff --cached --quiet; then
-            echo "No changes to commit"
+            echo "No HTML changes to commit — skipping push."
           else
-            COMMIT_MSG=$(git log -1 --format='%s' HEAD)
             git commit -m "chore: recompile HTML $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-            echo "Committed compiled HTML"
+            git push origin main
+            echo "Pushed compiled HTML to origin/main"
           fi
-
-      - name: Push to origin
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: false  # Do not force-push; fail on conflict
