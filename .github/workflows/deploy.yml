@@ -1,7 +1,7 @@
 name: Build & Deploy
 
 # Only trigger on .md source changes or this workflow file.
-# The commit step pushes .html files, which do NOT match '**.md',
+# Compiled HTML is pushed as .html files, which do NOT match '**.md',
 # so this workflow does NOT trigger itself in a loop.
 on:
   push:
@@ -35,56 +35,36 @@ jobs:
       - name: Compile index page
         run: npx @marp-team/marp-cli index.md --html --output ./index.html
 
-      # Compile each chapter → ChN/index.html, then alias → ChN.html at root
+      # Compile each chapter → ChN/index.html (subdirectory, images resolve correctly)
       - name: Compile Ch1 - 计算机系统结构概述
-        run: |
-          npx @marp-team/marp-cli Ch1/Ch1_计算机系统结构概述.md --html --output ./Ch1/index.html
-          cp Ch1/index.html ./Ch1.html
+        run: npx @marp-team/marp-cli Ch1/Ch1_计算机系统结构概述.md --html --output ./Ch1/index.html
 
       - name: Compile Ch2 - 指令系统
-        run: |
-          npx @marp-team/marp-cli Ch2/Ch2_指令系统.md --html --output ./Ch2/index.html
-          cp Ch2/index.html ./Ch2.html
+        run: npx @marp-team/marp-cli Ch2/Ch2_指令系统.md --html --output ./Ch2/index.html
 
       - name: Compile Ch3 - 流水线处理器
-        run: |
-          npx @marp-team/marp-cli Ch3/Ch3_流水线处理器.md --html --output ./Ch3/index.html
-          cp Ch3/index.html ./Ch3.html
+        run: npx @marp-team/marp-cli Ch3/Ch3_流水线处理器.md --html --output ./Ch3/index.html
 
       - name: Compile Ch4 - 指令级并行处理
-        run: |
-          npx @marp-team/marp-cli Ch4/Ch4_指令级并行处理.md --html --output ./Ch4/index.html
-          cp Ch4/index.html ./Ch4.html
+        run: npx @marp-team/marp-cli Ch4/Ch4_指令级并行处理.md --html --output ./Ch4/index.html
 
       - name: Compile Ch5 - 内存系统
-        run: |
-          npx @marp-team/marp-cli Ch5/Ch5_内存系统.md --html --output ./Ch5/index.html
-          cp Ch5/index.html ./Ch5.html
+        run: npx @marp-team/marp-cli Ch5/Ch5_内存系统.md --html --output ./Ch5/index.html
 
       - name: Compile Ch6 - 外存系统
-        run: |
-          npx @marp-team/marp-cli Ch6/Ch6_外存系统.md --html --output ./Ch6/index.html
-          cp Ch6/index.html ./Ch6.html
+        run: npx @marp-team/marp-cli Ch6/Ch6_外存系统.md --html --output ./Ch6/index.html
 
       - name: Compile Ch7 - 数据级并行
-        run: |
-          npx @marp-team/marp-cli Ch7/Ch7_数据级并行.md --html --output ./Ch7/index.html
-          cp Ch7/index.html ./Ch7.html
+        run: npx @marp-team/marp-cli Ch7/Ch7_数据级并行.md --html --output ./Ch7/index.html
 
       - name: Compile Ch8 - 多处理器
-        run: |
-          npx @marp-team/marp-cli Ch8/Ch8_多处理器.md --html --output ./Ch8/index.html
-          cp Ch8/index.html ./Ch8.html
+        run: npx @marp-team/marp-cli Ch8/Ch8_多处理器.md --html --output ./Ch8/index.html
 
       - name: Compile Ch9 - 计算机集群和数据中心
-        run: |
-          npx @marp-team/marp-cli Ch9/Ch9_计算机集群和数据中心.md --html --output ./Ch9/index.html
-          cp Ch9/index.html ./Ch9.html
+        run: npx @marp-team/marp-cli Ch9/Ch9_计算机集群和数据中心.md --html --output ./Ch9/index.html
 
       - name: Compile Ch10 - 专用加速器
-        run: |
-          npx @marp-team/marp-cli Ch10/Ch10_专用加速器.md --html --output ./Ch10/index.html
-          cp Ch10/index.html ./Ch10.html
+        run: npx @marp-team/marp-cli Ch10/Ch10_专用加速器.md --html --output ./Ch10/index.html
 
       # Commit & push
       - name: Configure Git identity
@@ -96,16 +76,16 @@ jobs:
         run: |
           git add \
             index.html \
-            Ch1.html Ch1/index.html Ch1/images/ \
-            Ch2.html Ch2/index.html Ch2/images/ \
-            Ch3.html Ch3/index.html Ch3/images/ \
-            Ch4.html Ch4/index.html Ch4/images/ \
-            Ch5.html Ch5/index.html Ch5/images/ \
-            Ch6.html Ch6/index.html Ch6/images/ \
-            Ch7.html Ch7/index.html Ch7/images/ \
-            Ch8.html Ch8/index.html Ch8/images/ \
-            Ch9.html Ch9/index.html Ch9/images/ \
-            Ch10.html Ch10/index.html Ch10/images/ \
+            Ch1/index.html Ch1/images/ \
+            Ch2/index.html Ch2/images/ \
+            Ch3/index.html Ch3/images/ \
+            Ch4/index.html Ch4/images/ \
+            Ch5/index.html Ch5/images/ \
+            Ch6/index.html Ch6/images/ \
+            Ch7/index.html Ch7/images/ \
+            Ch8/index.html Ch8/images/ \
+            Ch9/index.html Ch9/images/ \
+            Ch10/index.html Ch10/images/ \
             images/
           if git diff --cached --quiet; then
             echo "No HTML changes to commit — skipping push."
