@@ -95,7 +95,7 @@ title: 计算机系统结构
 
 ---
 
-## 课程讲义
+## 课程讲义参考
 
 <style scoped>
   table {
@@ -116,5 +116,3 @@ title: 计算机系统结构
 | 第 8 章 | [多处理器](Ch8/index.html) | 104 页 |
 | 第 9 章 | [计算机集群和数据中心](Ch9/index.html) | 54 页 |
 | 第 10 章 | [专用加速器](Ch10/index.html) | 22 页 |
-
-<span style="font-size:16px;color:#666">*共 10 章，590 页幻灯片。支持全屏放映（按 F 键）、演讲者视图（按 P 键）。*</span>
