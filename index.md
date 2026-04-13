@@ -66,7 +66,7 @@ title: 计算机系统结构
 - **作业** *20%*
   - 每章一次作业
 - **实验** *20%*
-  - [头哥](https://www.educoder.net/classrooms/iua8p7kn?code=DORTCN)，至05月31日
+  - [头歌](https://www.educoder.net/classrooms/jh6qryz5?code=HWZMQU)，大数据2301-02邀请码：HWZMQU，至05月17日
 - **考试** *60%*
 
 ---
